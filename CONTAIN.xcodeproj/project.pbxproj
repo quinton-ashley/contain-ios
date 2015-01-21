@@ -16,6 +16,11 @@
 		3327F1551A4388F000CF3D84 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3327F1541A4388F000CF3D84 /* Images.xcassets */; };
 		3327F1581A4388F000CF3D84 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3327F1561A4388F000CF3D84 /* LaunchScreen.xib */; };
 		3327F1641A4388F000CF3D84 /* CONTAINTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3327F1631A4388F000CF3D84 /* CONTAINTests.m */; };
+		337BCCE81A65D63B00C61BDB /* Ball.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCE71A65D63B00C61BDB /* Ball.m */; };
+		337BCCE91A65D63B00C61BDB /* Ball.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCE71A65D63B00C61BDB /* Ball.m */; };
+		337BCCEB1A6620C100C61BDB /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337BCCEA1A6620C100C61BDB /* SpriteKit.framework */; };
+		337BCCEE1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
+		337BCCEF1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,11 @@
 		3327F15D1A4388F000CF3D84 /* CONTAINTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CONTAINTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3327F1621A4388F000CF3D84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3327F1631A4388F000CF3D84 /* CONTAINTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CONTAINTests.m; sourceTree = "<group>"; };
+		337BCCE61A65D61D00C61BDB /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
+		337BCCE71A65D63B00C61BDB /* Ball.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ball.m; sourceTree = "<group>"; };
+		337BCCEA1A6620C100C61BDB /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		337BCCEC1A6634AC00C61BDB /* Paddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paddle.h; sourceTree = "<group>"; };
+		337BCCED1A6634C400C61BDB /* Paddle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Paddle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337BCCEB1A6620C100C61BDB /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +79,7 @@
 		3327F1361A4388EF00CF3D84 = {
 			isa = PBXGroup;
 			children = (
+				337BCCEA1A6620C100C61BDB /* SpriteKit.framework */,
 				3327F1411A4388EF00CF3D84 /* CONTAIN */,
 				3327F1601A4388F000CF3D84 /* CONTAINTests */,
 				3327F1401A4388EF00CF3D84 /* Products */,
@@ -90,6 +102,10 @@
 				3327F1471A4388EF00CF3D84 /* AppDelegate.m */,
 				3327F1491A4388EF00CF3D84 /* GameScene.h */,
 				3327F14A1A4388EF00CF3D84 /* GameScene.m */,
+				337BCCE61A65D61D00C61BDB /* Ball.h */,
+				337BCCE71A65D63B00C61BDB /* Ball.m */,
+				337BCCEC1A6634AC00C61BDB /* Paddle.h */,
+				337BCCED1A6634C400C61BDB /* Paddle.m */,
 				3327F14C1A4388EF00CF3D84 /* GameScene.sks */,
 				3327F14E1A4388EF00CF3D84 /* GameViewController.h */,
 				3327F14F1A4388EF00CF3D84 /* GameViewController.m */,
@@ -176,6 +192,7 @@
 				TargetAttributes = {
 					3327F13E1A4388EF00CF3D84 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = A794UT4LTE;
 					};
 					3327F15C1A4388F000CF3D84 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -228,8 +245,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337BCCE81A65D63B00C61BDB /* Ball.m in Sources */,
 				3327F1501A4388EF00CF3D84 /* GameViewController.m in Sources */,
 				3327F1481A4388EF00CF3D84 /* AppDelegate.m in Sources */,
+				337BCCEE1A6634C400C61BDB /* Paddle.m in Sources */,
 				3327F14B1A4388EF00CF3D84 /* GameScene.m in Sources */,
 				3327F1451A4388EF00CF3D84 /* main.m in Sources */,
 			);
@@ -239,6 +258,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337BCCEF1A6634C400C61BDB /* Paddle.m in Sources */,
+				337BCCE91A65D63B00C61BDB /* Ball.m in Sources */,
 				3327F1641A4388F000CF3D84 /* CONTAINTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +443,7 @@
 				3327F1691A4388F000CF3D84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3327F16A1A4388F000CF3D84 /* Build configuration list for PBXNativeTarget "CONTAINTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +452,7 @@
 				3327F16C1A4388F000CF3D84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
