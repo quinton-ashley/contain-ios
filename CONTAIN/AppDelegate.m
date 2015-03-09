@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GameScene.h"
 
 @interface AppDelegate ()
 

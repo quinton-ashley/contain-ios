@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GameScene.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

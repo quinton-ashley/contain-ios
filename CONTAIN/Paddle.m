@@ -14,7 +14,7 @@
     onePad.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:radius];
     onePad.strokeColor = [SKColor clearColor];
     onePad.physicsBody.categoryBitMask = 0x1 << 1;
-    onePad.physicsBody.collisionBitMask = 0x1 << 3;
+    onePad.physicsBody.collisionBitMask = 0x1 << 10;
     onePad.physicsBody.contactTestBitMask = 0x1 << 0;
     return onePad;
 }
