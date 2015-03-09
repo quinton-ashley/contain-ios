@@ -22,6 +22,8 @@
     //x and y values of the midpoint of the screen
     CGFloat midX;
     CGFloat midY;
+    CGFloat screenWidth;
+    CGFloat screenHeight;
     
     //center of screen
     CGPoint center;

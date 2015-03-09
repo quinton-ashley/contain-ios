@@ -8,6 +8,7 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import <iAd/iAd.h>
 
 @implementation SKScene (Unarchive)
 
@@ -49,6 +50,14 @@
     
     // Present the scene.
     [skView presentScene:scene];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if ([[UIScreen mainScreen] bounds].size.height > 550) {
+        [super viewDidAppear:animated];
+        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, 320, 50)];
+        [self.view addSubview:adView];
+    }
 }
 
 - (BOOL)shouldAutorotate

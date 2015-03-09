@@ -21,6 +21,7 @@
 		337BCCEB1A6620C100C61BDB /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337BCCEA1A6620C100C61BDB /* SpriteKit.framework */; };
 		337BCCEE1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
 		337BCCEF1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
+		337F7C331AAD4FE4006329B2 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337F7C321AAD4FE3006329B2 /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		337BCCEA1A6620C100C61BDB /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		337BCCEC1A6634AC00C61BDB /* Paddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paddle.h; sourceTree = "<group>"; };
 		337BCCED1A6634C400C61BDB /* Paddle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Paddle.m; sourceTree = "<group>"; };
+		337F7C321AAD4FE3006329B2 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337F7C331AAD4FE4006329B2 /* iAd.framework in Frameworks */,
 				337BCCEB1A6620C100C61BDB /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,6 +82,7 @@
 		3327F1361A4388EF00CF3D84 = {
 			isa = PBXGroup;
 			children = (
+				337F7C321AAD4FE3006329B2 /* iAd.framework */,
 				337BCCEA1A6620C100C61BDB /* SpriteKit.framework */,
 				3327F1411A4388EF00CF3D84 /* CONTAIN */,
 				3327F1601A4388F000CF3D84 /* CONTAINTests */,

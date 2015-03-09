@@ -21,51 +21,58 @@
     ballCategory    =  0x1 << 0;
     paddleCategory  =  0x1 << 1;
     boundCategory   =  0x1 << 2;
-    midX = self.size.width/2;
-    midY = self.size.height/2;
-    center = CGPointMake(midX, self.size.height-midX);
+    if (self.size.width < 600) {
+        screenWidth = self.size.width;
+        screenHeight = self.size.height;
+    } else {
+        screenWidth = self.size.width/1.24;
+        screenHeight = self.size.height;
+    }
+    midX = screenWidth/2;
+    midY = screenHeight/2;
+    center = CGPointMake(midX, screenHeight-midX);
     ballRadius = midX/160;
     padRadius0 = padRadius = midX/9.1;
     transitionTime = 0.2;
     energy0 = 400;
     eBarHeight = midX/150;
-    eBarY = self.size.height-midX*2.1;
+    eBarY = screenHeight-midX*2.1;
     
-    SKShapeNode *border1 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.size.width+40, 10)];
+    SKShapeNode *border1 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(screenWidth+40, 10)];
     border1.fillColor = [UIColor clearColor];
     border1.strokeColor = [UIColor clearColor];
-    border1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(self.size.width+40, 10)];
-    border1.position = CGPointMake(midX, self.size.height+15);
+    border1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(screenWidth+40, 10)];
+    border1.position = CGPointMake(midX, screenHeight+15);
     border1.physicsBody.dynamic = NO;
     border1.physicsBody.categoryBitMask = boundCategory;
     border1.physicsBody.collisionBitMask = 0x1 << 10;
     border1.physicsBody.contactTestBitMask = ballCategory;
     
-    SKShapeNode *border2 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(10, self.size.width+40)];
+    SKShapeNode *border2 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(10, screenWidth+40)];
     border2.fillColor = [UIColor clearColor];
     border2.strokeColor = [UIColor clearColor];
-    border2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(10, self.size.width+40)];
-    border2.position = CGPointMake(-15, self.size.height-midX);
+    border2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(10, screenWidth+40)];
+    border2.position = CGPointMake(-15, screenHeight-midX);
     border2.physicsBody.dynamic = NO;
     border2.physicsBody.categoryBitMask = boundCategory;
     border2.physicsBody.collisionBitMask = 0x1 << 10;
     border2.physicsBody.contactTestBitMask = ballCategory;
 
-    SKShapeNode *border3 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(10, self.size.width+40)];
+    SKShapeNode *border3 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(10, screenWidth+40)];
     border3.fillColor = [UIColor clearColor];
     border3.strokeColor = [UIColor clearColor];
-    border3.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(10, self.size.width+40)];
-    border3.position = CGPointMake(self.size.width+15, self.size.height-midX);
+    border3.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(10, screenWidth+40)];
+    border3.position = CGPointMake(screenWidth+15, screenHeight-midX);
     border3.physicsBody.dynamic = NO;
     border3.physicsBody.categoryBitMask = boundCategory;
     border3.physicsBody.collisionBitMask = 0x1 << 10;
     border3.physicsBody.contactTestBitMask = ballCategory;
     
-    SKShapeNode *border4 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.size.width+40, 10)];
+    SKShapeNode *border4 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(screenWidth+40, 10)];
     border4.fillColor = [UIColor clearColor];
     border4.strokeColor = [UIColor clearColor];
-    border4.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(self.size.width+40, 10)];
-    border4.position = CGPointMake(midX, self.size.height-self.size.width-15);
+    border4.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(screenWidth+40, 10)];
+    border4.position = CGPointMake(midX, screenHeight-screenWidth-15);
     border4.physicsBody.dynamic = NO;
     border4.physicsBody.categoryBitMask = boundCategory;
     border4.physicsBody.collisionBitMask = 0x1 << 10;
@@ -99,28 +106,28 @@
     SKSpriteNode *s2 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-hardlabel"];
     SKSpriteNode *s3 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-brutallabel"];
     
-    u0.position = CGPointMake(midX, self.size.height-midX);
-    u1.position = CGPointMake(midX, self.size.height-midX*2.2);
-    u2.position = CGPointMake(midX, self.size.height-midX*2.6);
-    u3.position = CGPointMake(midX, self.size.height-midX*3);
-    u4.position = CGPointMake(midX/6, self.size.height-midX*2.9);
-    u5.position = CGPointMake(midX*1.84, self.size.height-midX*2.9);
-    u7.position = CGPointMake(midX, self.size.height-midX*2.65);
+    u0.position = CGPointMake(midX, screenHeight-midX);
+    u1.position = CGPointMake(midX, screenHeight-midX*2.1);
+    u2.position = CGPointMake(midX, screenHeight-midX*2.5);
+    u3.position = CGPointMake(midX, screenHeight-midX*2.9);
+    u4.position = CGPointMake(midX/6, screenHeight-midX*2.9);
+    u5.position = CGPointMake(midX*1.84, screenHeight-midX*2.9);
+    u7.position = CGPointMake(midX, screenHeight-midX*2.65);
     
-    g0.position = CGPointMake(midX, self.size.height-midX*2.65);
-    g1.position = g2.position = u6.position = CGPointMake(midX/6, self.size.height-midX*2.4);
-    g3.position = g4.position = u8.position = CGPointMake(midX*1.84, self.size.height-midX*2.4);
-    g5.position = CGPointMake(midX/6, self.size.height-midX*2.76);
+    g0.position = CGPointMake(midX, screenHeight-midX*2.65);
+    g1.position = g2.position = u6.position = CGPointMake(midX/6, screenHeight-midX*2.4);
+    g3.position = g4.position = u8.position = CGPointMake(midX*1.84, screenHeight-midX*2.4);
+    g5.position = CGPointMake(midX/6, screenHeight-midX*2.76);
     
-    m0.position = CGPointMake(midX, self.size.height-midX*1.6);
-    m1.position = CGPointMake(midX, self.size.height-midX*2.2);
-    m2.position = CGPointMake(midX, self.size.height-midX*2.6);
-    m3.position = CGPointMake(midX, self.size.height-midX*3);
+    m0.position = CGPointMake(midX, screenHeight-midX*1.6);
+    m1.position = CGPointMake(midX, screenHeight-midX*2.1);
+    m2.position = CGPointMake(midX, screenHeight-midX*2.5);
+    m3.position = CGPointMake(midX, screenHeight-midX*2.9);
     
-    s0.position = CGPointMake(midX, self.size.height-midX*1.6);
-    s1.position = CGPointMake(midX/3, self.size.height-midX*2.2);
-    s2.position = CGPointMake(midX, self.size.height-midX*2.2);
-    s3.position = CGPointMake(midX*5/3, self.size.height-midX*2.2);
+    s0.position = CGPointMake(midX, screenHeight-midX*1.6);
+    s1.position = CGPointMake(midX/3, screenHeight-midX*2.2);
+    s2.position = CGPointMake(midX, screenHeight-midX*2.2);
+    s3.position = CGPointMake(midX*5/3, screenHeight-midX*2.2);
     
     u0.size = CGSizeMake(midX*1.5, midX);
     u1.size = u2.size = u3.size = CGSizeMake(midX, midX/3);
@@ -152,25 +159,25 @@
     
     gameu0resize = [SKAction resizeToWidth:midX height:midX/2 duration:transitionTime];
     gameu2resize = [SKAction resizeToWidth:midX*1.4 height:midX*1.1 duration:transitionTime];
-    gameu1move = [SKAction moveTo:CGPointMake(midX/6, self.size.height-midX*2.4) duration:transitionTime];
-    gameu2move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*2.65) duration:transitionTime];
-    gameu3move = [SKAction moveTo:CGPointMake(midX*1.84, self.size.height-midX*2.4) duration:transitionTime];
+    gameu1move = [SKAction moveTo:CGPointMake(midX/6, screenHeight-midX*2.4) duration:transitionTime];
+    gameu2move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.65) duration:transitionTime];
+    gameu3move = [SKAction moveTo:CGPointMake(midX*1.84, screenHeight-midX*2.4) duration:transitionTime];
     
     overu0resize = [SKAction resizeToWidth:midX/3 height:midX/6 duration:transitionTime];
     
     pauseboxresize = [SKAction resizeToWidth:midX/2 height:midX/3 duration:transitionTime];
-    pauseu0move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*4) duration:transitionTime];
-    pauseu1move = [SKAction moveTo:CGPointMake(midX/3, self.size.height-midX*2.2) duration:transitionTime];
-    pauseu2move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*2.2) duration:transitionTime];
-    pauseu3move = [SKAction moveTo:CGPointMake(midX*5/3, self.size.height-midX*2.2) duration:transitionTime];
+    pauseu0move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*4) duration:transitionTime];
+    pauseu1move = [SKAction moveTo:CGPointMake(midX/3, screenHeight-midX*2.2) duration:transitionTime];
+    pauseu2move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.2) duration:transitionTime];
+    pauseu3move = [SKAction moveTo:CGPointMake(midX*5/3, screenHeight-midX*2.2) duration:transitionTime];
     
     mainu0resize = [SKAction resizeToWidth:midX*1.5 height:midX duration:transitionTime];
     mainboxresize = [SKAction resizeToWidth:midX height:midX/3 duration:transitionTime];
     
-    mainu0move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX) duration:transitionTime];
-    mainu1move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*2.2) duration:transitionTime];
-    mainu2move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*2.6) duration:transitionTime];
-    mainu3move = [SKAction moveTo:CGPointMake(midX, self.size.height-midX*3) duration:transitionTime];
+    mainu0move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX) duration:transitionTime];
+    mainu1move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.1) duration:transitionTime];
+    mainu2move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.5) duration:transitionTime];
+    mainu3move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.9) duration:transitionTime];
     
     playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
     
@@ -275,7 +282,7 @@
         self.backgroundColor = [SKColor colorWithWhite:0.4 alpha:1];
         userPlaying = false;
         self.paused = true;
-        [universalArray[0] setPosition:CGPointMake(midX, self.size.height-midX*4)];
+        [universalArray[0] setPosition:CGPointMake(midX, screenHeight-midX*4)];
         [self addChild:universalArray[6]];
         [self addChild:universalArray[7]];
         [self addChild:universalArray[8]];
@@ -468,7 +475,7 @@
                 angle = 0;
             }
             for (int i=0; i<numPaddles; i++) {
-                [paddleArray[i] setPosition:CGPointMake((sin(GLKMathDegreesToRadians(angle+i*45))*midX)+midX, (cos(GLKMathDegreesToRadians(angle+i*45))*midX)+(self.size.height-midX))];
+                [paddleArray[i] setPosition:CGPointMake((sin(GLKMathDegreesToRadians(angle+i*45))*midX)+midX, (cos(GLKMathDegreesToRadians(angle+i*45))*midX)+(screenHeight-midX))];
                 [paddleArray[i] setZRotation:-GLKMathDegreesToRadians(angle+8+i*45)];
             }
             if (fmod(angle, 20) == 0) {
