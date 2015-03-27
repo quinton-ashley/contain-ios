@@ -18,5 +18,8 @@ extern NSString *const LocalPlayerIsAuthenticated;
 
 + (instancetype)sharedGameKitHelper;
 - (void)authenticateLocalPlayer;
+@property (nonatomic, readonly) NSString *leaderboardIdentifier1;
+//@property (nonatomic, readonly) NSString *leaderboardIdentifier2;
+//@property (nonatomic, readonly) NSString *leaderboardIdentifier3;
 
 @end

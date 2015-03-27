@@ -260,7 +260,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
 }
 
-- (void)setupGameButtons { //the game user interface can be set up through the pause menu, game over menu, and select difficulty menu
+- (void)setupGameButtons { //the game buttons user interface can be set up through the pause menu, game over menu, and select difficulty menu
     [universalArray[0] runAction:gameu0resize];
     [universalArray[0] runAction:gameu2move];
     [self addChild:gameArray[1]];
@@ -285,7 +285,7 @@
         if (userGameOver) {
             //remove end game stats
         } else {
-            self.backgroundColor = [SKColor colorWithWhite:0 alpha:1];
+            self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
             userPlaying = true;
             self.paused = false;
             [universalArray[7] removeFromParent];
@@ -334,7 +334,50 @@
         [paddleArray[i] removeFromParent];
     }
     [energyBar removeFromParent];
+    if (numContain == 1) {
+        [self reportScore];
+    } else if (numContain == 2) {
+        [self reportScore2];
+    } else if (numContain == 3) {
+        [self reportScore3];
+    }
     userPlaying = userInGame = false;
+}
+
+-(void)reportScore {
+    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard" player:[GKLocalPlayer localPlayer]];
+        score.value = playTime*5;
+        [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                NSLog(@"%@", [error localizedDescription]);
+            }
+        }];
+    }
+}
+
+-(void)reportScore2 {
+    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard2" player:[GKLocalPlayer localPlayer]];
+        score.value = playTime*5;
+        [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                NSLog(@"%@", [error localizedDescription]);
+            }
+        }];
+    }
+}
+
+-(void)reportScore3 {
+    if ([GKLocalPlayer localPlayer].isAuthenticated) {
+        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard3" player:[GKLocalPlayer localPlayer]];
+        score.value = playTime*5;
+        [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                NSLog(@"%@", [error localizedDescription]);
+            }
+        }];
+    }
 }
 
 - (void)startGame {
@@ -355,7 +398,8 @@
     scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*10000) stringValue]];
     scoreLabel.position = scorePosition;
     scoreLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    scoreLabel.fontSize = 18;
+    scoreLabel.fontSize = 20;
+    scoreLabel.fontName = @"AvenirNext-Regular";
     [self addChild:scoreLabel];
     [self addBall];
     if (numContain > 1) {
@@ -380,10 +424,11 @@
     if (userPlaying) {
         playTime++;
         [scoreLabel removeFromParent];
-        scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*10000) stringValue]];
+        scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*5) stringValue]];
         scoreLabel.position = scorePosition;
         scoreLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-        scoreLabel.fontSize = 18;
+        scoreLabel.fontSize = 20;
+        scoreLabel.fontName = @"AvenirNext-Regular";
         [self addChild:scoreLabel];
         if (playTime == ballTime) {
             [self addBall];

@@ -69,7 +69,6 @@
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
-    NSLog(@"done");
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
