@@ -9,11 +9,14 @@
 #import "GameScene.h"
 #import "Ball.h"
 #import "Paddle.h"
+#import "GameViewController.h"
+#import "GameKitHelper.h"
+#import <GameKit/GameKit.h>
 
 @implementation GameScene
 
 - (void)didMoveToView:(SKView *)view {
-    userInGame = userPlaying = userGameOver = userSelectMenu = userGotItem = false;
+    userInGame = userPlaying = userGameOver = userSelectMenu = false;
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
     //set game constants
     self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
@@ -118,6 +121,7 @@
     g1.position = g2.position = u6.position = CGPointMake(midX/6, screenHeight-midX*2.4);
     g3.position = g4.position = u8.position = CGPointMake(midX*1.84, screenHeight-midX*2.4);
     g5.position = CGPointMake(midX/6, screenHeight-midX*2.76);
+    g1.alpha = g3.alpha = 0.4;
     
     m0.position = CGPointMake(midX, screenHeight-midX*1.6);
     m1.position = CGPointMake(midX, screenHeight-midX*2.1);
@@ -181,19 +185,28 @@
     
     playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
     
+    scorePosition = CGPointMake(midX/6, screenHeight-midX*3);
+    
     userFromLoad = true;
     
     [self addChild:border1];
     [self addChild:border2];
     [self addChild:border3];
     [self addChild:border4];
-    [self setupMainMenu];
+    [self addChild:universalArray[0]];
+    [self addChild:mainArray[0]];
+    
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(setupMainMenu) userInfo:nil repeats:NO];
 }
 
 - (void)setupMainMenu { //this menu can be accessed from the load screen, pause menu, game over menu, how to menu, and the high score list
     if (userFromLoad) {
-        for (int i=0; i<4; i++) {
+        //omits the 0 object in each array on purpose because they are already display on the load screen
+        for (int i=1; i<4; i++) {
             [self addChild:universalArray[i]];
+        }
+        for (int i=1; i<mainArray.count; i++) {
+            [self addChild:mainArray[i]];
         }
         userFromLoad = false;
     } else if (!userPlaying) {
@@ -212,18 +225,17 @@
         [universalArray[5] removeFromParent];
         [universalArray[6] removeFromParent];
         [universalArray[8] removeFromParent];
-        //remove score and other labels that remain visible during both gameover and pause screens
         [gameArray[5] removeFromParent];
-        //if else statement for removing labels that exist seperately on the game over and pause screens
+        if (scoreLabel != nil) {
+            [scoreLabel removeFromParent];
+        }
         if (!userGameOver) {
             [universalArray[7] removeFromParent];
-        } else {
-            //remove game over message
+        }
+        for (int i=0; i<mainArray.count; i++) {
+            [self addChild:mainArray[i]];
         }
         userInGame = false;
-    }
-    for (int i=0; i<mainArray.count; i++) {
-        [self addChild:mainArray[i]];
     }
     userMainMenu = true;
 }
@@ -242,6 +254,10 @@
         [self addChild:selectArray[i]];
     }
     userSelectMenu = true;
+}
+
+-(void)viewHighScores {
+    [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
 }
 
 - (void)setupGameButtons { //the game user interface can be set up through the pause menu, game over menu, and select difficulty menu
@@ -308,71 +324,78 @@
     [self enumerateChildNodesWithName:@"ball_normal" usingBlock:^(SKNode *node, BOOL *stop) {
         [node removeFromParent];
     }];
-//    [self enumerateChildNodesWithName:@"ball_fast" usingBlock:^(SKNode *node, BOOL *stop) {
-//        [node removeFromParent];
-//    }];
-//    [self enumerateChildNodesWithName:@"ball_warp" usingBlock:^(SKNode *node, BOOL *stop) {
-//        [node removeFromParent];
-//    }];
-//    [self enumerateChildNodesWithName:@"ball_turn" usingBlock:^(SKNode *node, BOOL *stop) {
-//        [node removeFromParent];
-//    }];
-//    [self enumerateChildNodesWithName:@"ball_shrink" usingBlock:^(SKNode *node, BOOL *stop) {
-//        [node removeFromParent];
-//    }];
+    [self enumerateChildNodesWithName:@"ball_blink" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
+    [self enumerateChildNodesWithName:@"ball_speedshift" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeFromParent];
+    }];
     for (int i=0; i<numPaddles; i++) {
         [paddleArray[i] removeFromParent];
     }
     [energyBar removeFromParent];
-    userPlaying = userInGame = userGotItem = false;
+    userPlaying = userInGame = false;
 }
 
 - (void)startGame {
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
-    numBalls = angle = playTime = item0Amount = item1Amount = item2Amount = item3Amount = 0;
+    numBalls = angle = playTime = item0Amount = item1Amount = 0;
+    [gameArray[1] setAlpha:0.4];
+    [gameArray[3] setAlpha:0.4];
     numPaddles = 8;
-    numItems = 4;
     ballTime = 2;
-    itemActive = itemTime = -1;
     ballSpeedFactor = 1100;
     energy = energy0;
     energyBar = [SKShapeNode shapeNodeWithRect:CGRectMake(0, eBarY, midX*2, eBarHeight)];
     energyBar.fillColor = [UIColor whiteColor];
     [self addChild:energyBar];
+    if (scoreLabel != nil) {
+        [scoreLabel removeFromParent];
+    }
+    scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*10000) stringValue]];
+    scoreLabel.position = scorePosition;
+    scoreLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    scoreLabel.fontSize = 18;
+    [self addChild:scoreLabel];
     [self addBall];
-    [self addBall];
+    if (numContain > 1) {
+        [self addBall];
+    }
     padRadius = padRadius0;
     padPath = CGPathCreateMutable();
     CGPathAddArc(padPath, NULL, 0,0, padRadius, GLKMathDegreesToRadians(348), GLKMathDegreesToRadians(208), YES);
     CGPathAddArc(padPath, NULL, 0,0, padRadius-padRadius/8, GLKMathDegreesToRadians(555), GLKMathDegreesToRadians(0), YES);
     for (int i=0; i<numPaddles; i++) {
         paddleArray[i] = [Paddle newPaddleWithPath:padPath withRadius:padRadius];
-        [self changePad:i toColor:0.4];
+        [paddleArray[i] setFillColor:(__bridge CGColorRef)([UIColor colorWithWhite:0.4 alpha:1])];
         [self addChild:paddleArray[i]];
     }
-    padRadiusChange = padRadius0;
-    changePadRadius = userGameOver = false;
+    //padRadiusChange = padRadius0;
+    //changePadRadius =
+    userGameOver = false;
     userInGame = userPlaying = padRevolve = true;
 }
 
 -(void)timePassed {
     if (userPlaying) {
         playTime++;
-        //NSLog(@"%d, %d", playTime, itemTime);
-        if (itemTime == playTime) {
-            [self deactivateItem:itemActive];
-        }
+        [scoreLabel removeFromParent];
+        scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*10000) stringValue]];
+        scoreLabel.position = scorePosition;
+        scoreLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+        scoreLabel.fontSize = 18;
+        [self addChild:scoreLabel];
         if (playTime == ballTime) {
             [self addBall];
             ballTime = playTime+40+(numContain*5);
         }
-//        [self enumerateChildNodesWithName:@"ball_blink" usingBlock:^(SKNode *node, BOOL *stop) {
-//            if (node.alpha == 1.0) {
-//                [node setAlpha:0.4];
-//            } else {
-//                [node setAlpha:1.0];
-//            }
-//        }];
+        [self enumerateChildNodesWithName:@"ball_blink" usingBlock:^(SKNode *node, BOOL *stop) {
+            if (node.alpha == 1.0) {
+                [node setAlpha:0.4];
+            } else {
+                [node setAlpha:1.0];
+            }
+        }];
     }
 }
 
@@ -380,18 +403,17 @@
     /* Called when a touch begins */
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
-        //NSLog(@"%f, %f", location.x, location.y);
         if (!userInGame) {
             if (userMainMenu) {
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
                     userMainMenu = false;
                     [self setupSelectMenu];
                 }
-//                else if (CGRectContainsPoint([universalArray[2] frame], location)) {
-//                    [self viewHighScores];
-//                } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
-//                    [self setupHowTo];
-//                }
+                else if (CGRectContainsPoint([universalArray[2] frame], location)) {
+                    [self viewHighScores];
+                } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
+                    //[self setupHowTo];
+                }
             } else if (userSelectMenu) {
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
                     numContain = 1;
@@ -417,9 +439,13 @@
                 if (location.y < midY) {
                     if (location.x < midX/4) {
                         if (CGRectContainsPoint([universalArray[1] frame], location)) {
-                            [self activateItem:0];
-                        } else if (CGRectContainsPoint([universalArray[4] frame], location)) {
-                            [self activateItem:2];
+                            if (item0Amount > 0) {
+                                [self addBall];
+                                item0Amount--;
+                                if (item0Amount == 0) {
+                                    [gameArray[1] setAlpha:0.4];
+                                }
+                            }
                         }
                     } else if (location.x < midX*7/4) {
                         padRevolve = !padRevolve;
@@ -429,9 +455,13 @@
                         [self addChild:gameArray[0]];
                     } else {
                         if (CGRectContainsPoint([universalArray[3] frame], location)) {
-                            [self activateItem:1];
-                        } else if (CGRectContainsPoint([universalArray[5] frame], location)) {
-                            [self activateItem:3];
+                            if (item1Amount > 0) {
+                                energy = energy0;
+                                item1Amount--;
+                                if (item1Amount == 0) {
+                                    [gameArray[3] setAlpha:0.4];
+                                }
+                            }
                         }
                     }
                 } else if (padRevolve) {
@@ -457,7 +487,7 @@
     if (userInGame && userPlaying && !padRevolve) {
         padRevolve = !padRevolve;
         for (int i=0; i<numPaddles; i++) {
-            [self changePad:i toColor:0.4];
+            [paddleArray[i] setFillColor:(__bridge CGColorRef)([UIColor colorWithWhite:0.4 alpha:1])];
         }
         [gameArray[0] removeFromParent];
     }
@@ -467,9 +497,9 @@
     /* Called before each frame is rendered */
     if (userInGame && userPlaying) {
         if (padRevolve) {
-            if (changePadRadius) {
-                [self changePadsToSize:padRadiusChange];
-            }
+//            if (changePadRadius) {
+//                [self changePadsSize];
+//            }
             angle+=1.5;
             if (angle >= 360) {
                 angle = 0;
@@ -477,9 +507,6 @@
             for (int i=0; i<numPaddles; i++) {
                 [paddleArray[i] setPosition:CGPointMake((sin(GLKMathDegreesToRadians(angle+i*45))*midX)+midX, (cos(GLKMathDegreesToRadians(angle+i*45))*midX)+(screenHeight-midX))];
                 [paddleArray[i] setZRotation:-GLKMathDegreesToRadians(angle+8+i*45)];
-            }
-            if (fmod(angle, 20) == 0) {
-                [self changePad:arc4random_uniform(numPaddles) toColor:0.4];
             }
         } else {
             energy--;
@@ -502,53 +529,25 @@
     numBalls++;
 }
 
--(void)changePad:(int)padNum toColor:(double)colorNum {
-//    [paddleArray[padNum] setFillColor:(__bridge CGColorRef)([UIColor colorWithWhite:((double) arc4random_uniform(50)+60)/100 alpha:1])];
-    [paddleArray[padNum] setFillColor:(__bridge CGColorRef)([UIColor colorWithWhite:colorNum alpha:1])];
-}
-
--(void)changePadsToSize:(double)desiredRadius {
-    if ((padRadius < desiredRadius && padRadius > desiredRadius-5) || (padRadius > desiredRadius && padRadius < desiredRadius+5)) {
-        changePadRadius = false;
-    }
-    if (padRadius < desiredRadius+5) {
-        padRadius++;
-    } else {
-        padRadius--;
-    }
-    padPath = CGPathCreateMutable();
-    CGPathAddArc(padPath, NULL, 0,0, padRadius, GLKMathDegreesToRadians(348), GLKMathDegreesToRadians(208), YES);
-    CGPathAddArc(padPath, NULL, 0,0, padRadius-padRadius/8, GLKMathDegreesToRadians(555), GLKMathDegreesToRadians(0), YES);
-    for (int i=0; i<numPaddles; i++) {
-        [paddleArray[i] removeFromParent];
-        paddleArray[i] = [Paddle newPaddleWithPath:padPath withRadius:padRadius];
-        [self changePad:i toColor:0.4];
-        [self addChild:paddleArray[i]];
-    }
-}
-
--(void)activateItem:(int)itemNum {
-    if (itemActive == -1) {
-        if (itemNum == 0 && item0Amount > 0 && !changePadRadius) {
-            padRadiusChange = padRadius0*2;
-            changePadRadius = true;
-            itemActive = 0;
-            itemTime = playTime+10;
-            item0Amount--;
-        } else if (itemNum == 1 && item1Amount > 0) {
-            energy = energy0;
-            item1Amount--;
-        }
-    }
-}
-
--(void)deactivateItem:(int)itemNum {
-    if (itemNum == 0) {
-        padRadiusChange = padRadius0;
-        changePadRadius = true;
-        itemActive = -1;
-    }
-}
+//-(void)changePadsSize {
+//    if ((padRadius < padRadiusChange && padRadius > padRadiusChange-5) || (padRadius > padRadiusChange && padRadius < padRadiusChange+5)) {
+//        changePadRadius = false;
+//    }
+//    if (padRadius < padRadiusChange+5) {
+//        padRadius++;
+//    } else {
+//        padRadius--;
+//    }
+//    padPath = CGPathCreateMutable();
+//    CGPathAddArc(padPath, NULL, 0,0, padRadius, GLKMathDegreesToRadians(348), GLKMathDegreesToRadians(208), YES);
+//    CGPathAddArc(padPath, NULL, 0,0, padRadius-padRadius/8, GLKMathDegreesToRadians(555), GLKMathDegreesToRadians(0), YES);
+//    for (int i=0; i<numPaddles; i++) {
+//        [paddleArray[i] removeFromParent];
+//        paddleArray[i] = [Paddle newPaddleWithPath:padPath withRadius:padRadius];
+//        [paddleArray[i] setFillColor:(__bridge CGColorRef)([UIColor colorWithWhite:0.4 alpha:1])];
+//        [self addChild:paddleArray[i]];
+//    }
+//}
 
 -(void)screenFlash {
     if (userPlaying && !userGameOver) {
@@ -568,19 +567,38 @@
     }
     if ((firstBody.categoryBitMask & ballCategory) != 0) {
         if ((secondBody.categoryBitMask & paddleCategory) != 0 && !padRevolve) {
+            int chance = arc4random_uniform(100);
+            if ([[firstBody.node name] isEqualToString:@"ball_blink"]) {
+                [firstBody.node setAlpha:0.4];
+                double vectorTotal = abs(firstBody.node.position.x - secondBody.node.position.x) + abs(firstBody.node.position.y - secondBody.node.position.y);
+                double multi = (midX*(ballSpeedFactor/10000))/vectorTotal;
+                firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi*3, (firstBody.node.position.y - secondBody.node.position.y)*multi*3);
+                firstBody.node.name = @"ball_speedshift";
+            } else {
+                if (chance < 10 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
+                    firstBody.node.name = @"ball_blink";
+                } else {
+                    if ([[firstBody.node name] isEqualToString:@"ball_speedshift"]) {
+                        if (chance > 50) {
+                            item0Amount++;
+                            [gameArray[1] setAlpha:1.0];
+                        } else {
+                            item1Amount++;
+                            [gameArray[3] setAlpha:1.0];
+                        }
+                    }
+                    [firstBody.node setAlpha:1.0];
+                    firstBody.node.name = @"ball_normal";
+                }
+                double vectorTotal = abs(firstBody.node.position.x - secondBody.node.position.x) + abs(firstBody.node.position.y - secondBody.node.position.y);
+                double multi = (midX*(ballSpeedFactor/10000))/vectorTotal;
+                firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi, (firstBody.node.position.y - secondBody.node.position.y)*multi);
+            }
             ballSpeedFactor++;
-            double vectorTotal = abs(firstBody.node.position.x - secondBody.node.position.x) + abs(firstBody.node.position.y - secondBody.node.position.y);
-            double multi = (midX*(ballSpeedFactor/10000))/vectorTotal;
-            firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi, (firstBody.node.position.y - secondBody.node.position.y)*multi);
             energy = energy+26-numContain-25*numContain+25*numBalls;
             if (energy > energy0) {
                 energy = energy0;
             }
-//            if ([[firstBody.node name] isEqualToString:@"ball_blink"]) {
-//                firstBody.node.name = @"ball_fast";
-//            } else {
-//                firstBody.node.name = @"ball_blink";
-//            }
         } else if ((secondBody.categoryBitMask & boundCategory) != 0) {
             [firstBody.node removeFromParent];
             numBalls--;

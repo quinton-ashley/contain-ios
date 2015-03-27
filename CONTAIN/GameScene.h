@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate> {
     //arrays of game elements
@@ -30,7 +31,6 @@
     
     //number of each element
     int numPaddles;
-    int numItems;
     int numBalls;
     int numContain;
     
@@ -52,7 +52,9 @@
     CGFloat padRadius;
     
     //the desired radius size to change the paddle to
-    CGFloat padRadiusChange;
+    //CGFloat padRadiusChange;
+    
+    //int padToChange;
     
     //the paddle's shape
     CGMutablePathRef padPath;
@@ -60,16 +62,10 @@
     //the angle of rotation of the circle of paddles
     double angle;
     
-    //number of which item is active
-    int itemActive;
-    
     int item0Amount;
     int item1Amount;
-    int item2Amount;
-    int item3Amount;
     
     //time values
-    int itemTime;
     int ballTime;
     int playTime;
     
@@ -82,12 +78,10 @@
     bool userPlaying;
     bool userMainMenu;
     bool userSelectMenu;
-    bool userGotItem;
-    
     bool userGameOver;
     
     //boolean for if the paddles radi must be changed
-    bool changePadRadius;
+    //bool changePadRadius;
     
     double transitionTime;
     
@@ -97,6 +91,9 @@
     int eBarHeight;
     
     SKShapeNode *energyBar;
+    SKLabelNode *scoreLabel;
+    
+    CGPoint scorePosition;
     
     SKAction *rotaten90;
     SKAction *rotate90;
@@ -124,4 +121,5 @@
 }
 //method that pauses the game
 - (void)setupPauseMenu;
+
 @end

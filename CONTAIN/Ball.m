@@ -11,7 +11,8 @@
 @implementation Ball
 + (id)newBallWithRadiusOf:(CGFloat)radius atPoint:(CGPoint)position withSpeed:(CGFloat)speed {
     Ball *oneball = [Ball shapeNodeWithCircleOfRadius:radius];
-    oneball.fillColor = [UIColor whiteColor];
+    oneball.fillColor = [UIColor clearColor];
+    oneball.strokeColor = [UIColor whiteColor];
     oneball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:radius];
     float velX = arc4random_uniform(speed/2);
     float velY = speed-velX;

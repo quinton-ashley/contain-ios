@@ -8,6 +8,7 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import "GameKitHelper.h"
 #import <iAd/iAd.h>
 
 @implementation SKScene (Unarchive)
@@ -29,27 +30,51 @@
 
 @end
 
+@interface GameViewController() <GKGameCenterControllerDelegate>
+
+@end
+
 @implementation GameViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
++ (instancetype)sharedViewActions {
+    static GameViewController *sharedViewActions;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedViewActions = [[GameViewController alloc] init];
+    });
+    return sharedViewActions;
+}
 
-    // Configure the view.
+- (void)viewDidLoad {
+    [super viewDidLoad];
     SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
-    /* Sprite Kit applies additional optimizations to improve rendering performance */
-    skView.ignoresSiblingOrder = YES;
-    
-    // Create and configure the scene.
-//    GameScene *scene = [GameScene unarchiveFromFile:@"GameScene"];
-//    scene.scaleMode = SKSceneScaleModeAspectFit;
-    
+    //skView.showsFPS = YES;
+    //skView.showsNodeCount = YES;
+    //skView.ignoresSiblingOrder = YES;
     GameScene *scene = [[GameScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
-    
-    // Present the scene.
     [skView presentScene:scene];
+    
+}
+
+- (void)showAuthenticationViewController {
+    GameKitHelper *gameKitHelper = [GameKitHelper sharedGameKitHelper];
+    [self presentViewController:gameKitHelper.authenticationViewController animated:YES completion:nil];
+}
+
+-(void)showGameCenterViewController:(NSNotification *)notification {
+    _gcViewController = [[GKGameCenterViewController alloc] init];
+    _gcViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    _gcViewController.gameCenterDelegate = self;
+    [self presentViewController:_gcViewController animated:YES completion:nil];
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
+    NSLog(@"done");
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -58,15 +83,25 @@
         ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, 320, 50)];
         [self.view addSubview:adView];
     }
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(showAuthenticationViewController)
+     name:PresentAuthenticationViewController
+     object:nil];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(showGameCenterViewController:)
+     name:PresentGameCenterViewController
+     object:nil];
+    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
 }
 
-- (BOOL)shouldAutorotate
-{
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
-{
+- (NSUInteger)supportedInterfaceOrientations {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return UIInterfaceOrientationMaskAllButUpsideDown;
     } else {
@@ -74,8 +109,7 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
 }
