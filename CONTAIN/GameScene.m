@@ -335,42 +335,18 @@
     }
     [energyBar removeFromParent];
     if (numContain == 1) {
-        [self reportScore];
+        [self reportScore:@"contain.score.leaderboard"];
     } else if (numContain == 2) {
-        [self reportScore2];
+        [self reportScore:@"contain.score.leaderboard2"];
     } else if (numContain == 3) {
-        [self reportScore3];
+        [self reportScore:@"contain.score.leaderboard3"];
     }
     userPlaying = userInGame = false;
 }
 
--(void)reportScore {
+-(void)reportScore:(NSString *)leaderboardID {
     if ([GKLocalPlayer localPlayer].isAuthenticated) {
-        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard" player:[GKLocalPlayer localPlayer]];
-        score.value = playTime*5;
-        [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
-            if (error != nil) {
-                NSLog(@"%@", [error localizedDescription]);
-            }
-        }];
-    }
-}
-
--(void)reportScore2 {
-    if ([GKLocalPlayer localPlayer].isAuthenticated) {
-        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard2" player:[GKLocalPlayer localPlayer]];
-        score.value = playTime*5;
-        [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
-            if (error != nil) {
-                NSLog(@"%@", [error localizedDescription]);
-            }
-        }];
-    }
-}
-
--(void)reportScore3 {
-    if ([GKLocalPlayer localPlayer].isAuthenticated) {
-        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:@"contain.score.leadboard3" player:[GKLocalPlayer localPlayer]];
+        GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID player:[GKLocalPlayer localPlayer]];
         score.value = playTime*5;
         [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
             if (error != nil) {
@@ -382,7 +358,8 @@
 
 - (void)startGame {
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
-    numBalls = angle = playTime = item0Amount = item1Amount = 0;
+    numBalls = angle = playTime = 0;
+    item0ready = item1ready = false;
     [gameArray[1] setAlpha:0.4];
     [gameArray[3] setAlpha:0.4];
     numPaddles = 8;
@@ -484,12 +461,10 @@
                 if (location.y < midY) {
                     if (location.x < midX/4) {
                         if (CGRectContainsPoint([universalArray[1] frame], location)) {
-                            if (item0Amount > 0) {
+                            if (item0ready) {
                                 [self addBall];
-                                item0Amount--;
-                                if (item0Amount == 0) {
-                                    [gameArray[1] setAlpha:0.4];
-                                }
+                                item0ready = false;
+                                [gameArray[1] setAlpha:0.4];
                             }
                         }
                     } else if (location.x < midX*7/4) {
@@ -500,12 +475,10 @@
                         [self addChild:gameArray[0]];
                     } else {
                         if (CGRectContainsPoint([universalArray[3] frame], location)) {
-                            if (item1Amount > 0) {
+                            if (item1ready) {
                                 energy = energy0;
-                                item1Amount--;
-                                if (item1Amount == 0) {
-                                    [gameArray[3] setAlpha:0.4];
-                                }
+                                item1ready = false;
+                                [gameArray[3] setAlpha:0.4];
                             }
                         }
                     }
@@ -620,15 +593,15 @@
                 firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi*3, (firstBody.node.position.y - secondBody.node.position.y)*multi*3);
                 firstBody.node.name = @"ball_speedshift";
             } else {
-                if (chance < 10 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
+                if (chance < 8 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
                     firstBody.node.name = @"ball_blink";
                 } else {
                     if ([[firstBody.node name] isEqualToString:@"ball_speedshift"]) {
                         if (chance > 50) {
-                            item0Amount++;
+                            item0ready = true;
                             [gameArray[1] setAlpha:1.0];
                         } else {
-                            item1Amount++;
+                            item1ready = true;
                             [gameArray[3] setAlpha:1.0];
                         }
                     }

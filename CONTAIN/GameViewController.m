@@ -53,7 +53,6 @@
     //skView.ignoresSiblingOrder = YES;
     GameScene *scene = [[GameScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     [skView presentScene:scene];
-    
 }
 
 - (void)showAuthenticationViewController {

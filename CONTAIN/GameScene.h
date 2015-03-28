@@ -62,8 +62,8 @@
     //the angle of rotation of the circle of paddles
     double angle;
     
-    int item0Amount;
-    int item1Amount;
+    bool item0ready;
+    bool item1ready;
     
     //time values
     int ballTime;
