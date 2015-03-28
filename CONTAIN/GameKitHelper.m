@@ -47,14 +47,6 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
         } else if([GKLocalPlayer localPlayer].isAuthenticated) {
             _enableGameCenter = YES;
             [[NSNotificationCenter defaultCenter] postNotificationName:LocalPlayerIsAuthenticated object:nil];
-//            [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^(NSString *leaderboardIdentifier, NSError *error) {
-//                if (error != nil) {
-//                    NSLog(@"%@", [error localizedDescription]);
-//                }
-//                else {
-//                    _leaderboardIdentifier1 = leaderboardIdentifier;
-//                }
-//            }];
         } else {
             _enableGameCenter = NO;
         }

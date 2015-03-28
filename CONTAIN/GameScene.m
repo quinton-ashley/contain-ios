@@ -93,10 +93,11 @@
     
     SKSpriteNode *g0 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-titlefilled"];
     SKSpriteNode *g1 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-addball"];
-    SKSpriteNode *g2 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-addballfilled"];
+    SKSpriteNode *g2 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-itemplaceholder"];
     SKSpriteNode *g3 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-refill"];
-    SKSpriteNode *g4 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-refillready"];
+    SKSpriteNode *g4 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-pause"];
     SKSpriteNode *g5 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-score"];
+    SKSpriteNode *g6 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-energy"];
     
     
     SKSpriteNode *m0 = [SKSpriteNode spriteNodeWithImageNamed:@"Contain-credits"];
@@ -118,10 +119,10 @@
     u7.position = CGPointMake(midX, screenHeight-midX*2.65);
     
     g0.position = CGPointMake(midX, screenHeight-midX*2.65);
-    g1.position = g2.position = u6.position = CGPointMake(midX/6, screenHeight-midX*2.4);
-    g3.position = g4.position = u8.position = CGPointMake(midX*1.84, screenHeight-midX*2.4);
+    g1.position = g2.position = g3.position =  u6.position = CGPointMake(midX/6, screenHeight-midX*2.4);
+    g4.position = u8.position = CGPointMake(midX*1.84, screenHeight-midX*2.4);
     g5.position = CGPointMake(midX/6, screenHeight-midX*2.76);
-    g1.alpha = g3.alpha = 0.4;
+    g6.position = CGPointMake(midX*1.84, screenHeight-midX*2.85);
     
     m0.position = CGPointMake(midX, screenHeight-midX*1.6);
     m1.position = CGPointMake(midX, screenHeight-midX*2.1);
@@ -138,7 +139,8 @@
     u4.size = u5.size = u7.size = CGSizeMake(midX/3, midX/2);
     
     g0.size = CGSizeMake(midX, midX/2);
-    g1.size = g2.size = g3.size = g4.size = g5.size = u6.size = u8.size = CGSizeMake(midX/4, midX/3);
+    g1.size = g3.size = g4.size = g5.size = g6.size = u6.size = u8.size = CGSizeMake(midX/4, midX/3);
+    g2.size = CGSizeMake(midX/4.5, midX/3.5);
     g5.size = CGSizeMake(midX/5, midX/9);
     
     m0.size = CGSizeMake(midX, midX/4);
@@ -152,7 +154,7 @@
     s3.size = CGSizeMake(midX/2.5, midX/5);
     
     universalArray = [[NSMutableArray alloc] initWithObjects:u0, u1, u2, u3, u4, u5, u6, u7, u8, nil];
-    gameArray = [[NSMutableArray alloc] initWithObjects:g0, g1, g2, g3, g4, g5, nil];
+    gameArray = [[NSMutableArray alloc] initWithObjects:g0, g1, g2, g3, g4, g5, g6, nil];
     mainArray = [[NSMutableArray alloc] initWithObjects:m0, m1, m2, m3, nil];
     selectArray = [[NSMutableArray alloc] initWithObjects:s0, s1, s2, s3, nil];
     
@@ -186,6 +188,7 @@
     playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
     
     scorePosition = CGPointMake(midX/6, screenHeight-midX*3);
+    energyPosition = CGPointMake(midX*1.82, screenHeight-midX*3);
     
     userFromLoad = true;
     
@@ -226,9 +229,14 @@
         [universalArray[6] removeFromParent];
         [universalArray[8] removeFromParent];
         [gameArray[5] removeFromParent];
+        [gameArray[6] removeFromParent];
         if (scoreLabel != nil) {
             [scoreLabel removeFromParent];
         }
+        if (energyLabel != nil) {
+            [energyLabel removeFromParent];
+        }
+        //if the user is coming from the pause menu then remove pause menu specific graphics
         if (!userGameOver) {
             [universalArray[7] removeFromParent];
         }
@@ -260,11 +268,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
 }
 
+-(void)setupHowToPlay {
+    
+}
+
 - (void)setupGameButtons { //the game buttons user interface can be set up through the pause menu, game over menu, and select difficulty menu
     [universalArray[0] runAction:gameu0resize];
     [universalArray[0] runAction:gameu2move];
-    [self addChild:gameArray[1]];
-    [self addChild:gameArray[3]];
+    [self addChild:gameArray[2]];
+    [self addChild:gameArray[4]];
     if (userSelectMenu) {
         [universalArray[2] runAction:gameu2resize];
         [universalArray[1] runAction:rotaten90];
@@ -275,6 +287,7 @@
         [self addChild:universalArray[4]];
         [self addChild:universalArray[5]];
         [self addChild:gameArray[5]];
+        [self addChild:gameArray[6]];
         for (int i=0; i<selectArray.count; i++) {
             [selectArray[i] removeFromParent];
         }
@@ -302,8 +315,8 @@
         [self addChild:universalArray[6]];
         [self addChild:universalArray[7]];
         [self addChild:universalArray[8]];
-        [gameArray[1] removeFromParent];
-        [gameArray[3] removeFromParent];
+        [gameArray[2] removeFromParent];
+        [gameArray[4] removeFromParent];
     }
 }
 
@@ -317,7 +330,9 @@
         [self addChild:universalArray[6]];
         [self addChild:universalArray[8]];
         [gameArray[1] removeFromParent];
+        [gameArray[2] removeFromParent];
         [gameArray[3] removeFromParent];
+        [gameArray[4] removeFromParent];
     } else {
         self.paused = false;
     }
@@ -359,9 +374,7 @@
 - (void)startGame {
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
     numBalls = angle = playTime = 0;
-    item0ready = item1ready = false;
-    [gameArray[1] setAlpha:0.4];
-    [gameArray[3] setAlpha:0.4];
+    item = -1;
     numPaddles = 8;
     ballTime = 2;
     ballSpeedFactor = 1100;
@@ -372,12 +385,21 @@
     if (scoreLabel != nil) {
         [scoreLabel removeFromParent];
     }
+    if (energyLabel != nil) {
+        [energyLabel removeFromParent];
+    }
     scoreLabel = [SKLabelNode labelNodeWithText:[@(playTime*10000) stringValue]];
     scoreLabel.position = scorePosition;
     scoreLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     scoreLabel.fontSize = 20;
     scoreLabel.fontName = @"AvenirNext-Regular";
     [self addChild:scoreLabel];
+    energyLabel = [SKLabelNode labelNodeWithText:[@((int) energy/4) stringValue]];
+    energyLabel.position = energyPosition;
+    energyLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    energyLabel.fontSize = 20;
+    energyLabel.fontName = @"AvenirNext-Regular";
+    [self addChild:energyLabel];
     [self addBall];
     if (numContain > 1) {
         [self addBall];
@@ -407,6 +429,13 @@
         scoreLabel.fontSize = 20;
         scoreLabel.fontName = @"AvenirNext-Regular";
         [self addChild:scoreLabel];
+        [energyLabel removeFromParent];
+        energyLabel = [SKLabelNode labelNodeWithText:[@((int) energy/4) stringValue]];
+        energyLabel.position = energyPosition;
+        energyLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+        energyLabel.fontSize = 20;
+        energyLabel.fontName = @"AvenirNext-Regular";
+        [self addChild:energyLabel];
         if (playTime == ballTime) {
             [self addBall];
             ballTime = playTime+40+(numContain*5);
@@ -434,7 +463,7 @@
                 else if (CGRectContainsPoint([universalArray[2] frame], location)) {
                     [self viewHighScores];
                 } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
-                    //[self setupHowTo];
+                    [self setupHowToPlay];
                 }
             } else if (userSelectMenu) {
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
@@ -461,10 +490,16 @@
                 if (location.y < midY) {
                     if (location.x < midX/4) {
                         if (CGRectContainsPoint([universalArray[1] frame], location)) {
-                            if (item0ready) {
+                            if (item == 0) {
                                 [self addBall];
-                                item0ready = false;
-                                [gameArray[1] setAlpha:0.4];
+                                item = -1;
+                                [gameArray[1] removeFromParent];
+                                [self addChild:gameArray[2]];
+                            } else if (item == 1) {
+                                energy = energy0;
+                                item = -1;
+                                [gameArray[3] removeFromParent];
+                                [self addChild:gameArray[2]];
                             }
                         }
                     } else if (location.x < midX*7/4) {
@@ -474,16 +509,10 @@
                         }
                         [self addChild:gameArray[0]];
                     } else {
-                        if (CGRectContainsPoint([universalArray[3] frame], location)) {
-                            if (item1ready) {
-                                energy = energy0;
-                                item1ready = false;
-                                [gameArray[3] setAlpha:0.4];
-                            }
+                        if (CGRectContainsPoint([universalArray[3] frame], location) && padRevolve) {
+                            [self setupPauseMenu];
                         }
                     }
-                } else if (padRevolve) {
-                    [self setupPauseMenu];
                 }
             } else {
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
@@ -534,6 +563,13 @@
         energyBar.fillColor = [UIColor whiteColor];
         [self addChild:energyBar];
         if (energy < 0) {
+            [energyLabel removeFromParent];
+            energyLabel = [SKLabelNode labelNodeWithText:[@((int) energy/4) stringValue]];
+            energyLabel.position = energyPosition;
+            energyLabel.verticalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+            energyLabel.fontSize = 20;
+            energyLabel.fontName = @"AvenirNext-Regular";
+            [self addChild:energyLabel];
             userGameOver = true;
             [self gameOver];
         }
@@ -596,14 +632,15 @@
                 if (chance < 8 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
                     firstBody.node.name = @"ball_blink";
                 } else {
-                    if ([[firstBody.node name] isEqualToString:@"ball_speedshift"]) {
+                    if ([[firstBody.node name] isEqualToString:@"ball_speedshift"] && item == -1) {
                         if (chance > 50) {
-                            item0ready = true;
-                            [gameArray[1] setAlpha:1.0];
+                            item = 0;
+                            [self addChild:gameArray[1]];
                         } else {
-                            item1ready = true;
-                            [gameArray[3] setAlpha:1.0];
+                            item = 1;
+                            [self addChild:gameArray[3]];
                         }
+                        [gameArray[2] removeFromParent];
                     }
                     [firstBody.node setAlpha:1.0];
                     firstBody.node.name = @"ball_normal";

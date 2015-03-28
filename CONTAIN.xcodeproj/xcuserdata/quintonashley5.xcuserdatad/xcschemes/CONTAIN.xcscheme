@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-               BuildableName = "CONTAIN.app"
+               BuildableName = "CONTAIN!.app"
                BlueprintName = "CONTAIN"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F15C1A4388F000CF3D84"
-               BuildableName = "CONTAINTests.xctest"
+               BuildableName = "CONTAIN!Tests.xctest"
                BlueprintName = "CONTAINTests"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F15C1A4388F000CF3D84"
-               BuildableName = "CONTAINTests.xctest"
+               BuildableName = "CONTAIN!Tests.xctest"
                BlueprintName = "CONTAINTests"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN.app"
+            BuildableName = "CONTAIN!.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>
@@ -72,11 +72,12 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN.app"
+            BuildableName = "CONTAIN!.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>
@@ -90,11 +91,12 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN.app"
+            BuildableName = "CONTAIN!.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>

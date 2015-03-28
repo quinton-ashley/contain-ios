@@ -62,8 +62,7 @@
     //the angle of rotation of the circle of paddles
     double angle;
     
-    bool item0ready;
-    bool item1ready;
+    int item;
     
     //time values
     int ballTime;
@@ -92,8 +91,10 @@
     
     SKShapeNode *energyBar;
     SKLabelNode *scoreLabel;
+    SKLabelNode *energyLabel;
     
     CGPoint scorePosition;
+    CGPoint energyPosition;
     
     SKAction *rotaten90;
     SKAction *rotate90;
