@@ -668,5 +668,14 @@
     }
 }
 
++ (instancetype)sharedGameFunctions {
+    static GameScene *sharedGameFunctions;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedGameFunctions = [[GameScene alloc] init];
+    });
+    return sharedGameFunctions;
+}
+
 @end
 

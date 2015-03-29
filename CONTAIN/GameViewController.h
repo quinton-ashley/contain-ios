@@ -12,7 +12,6 @@
 
 @interface GameViewController : UIViewController <GKGameCenterControllerDelegate>
 
-+ (instancetype)sharedViewActions;
 -(void)showGameCenterViewController:(NSNotification *)notification;
 
 @property (nonatomic, readonly) GKGameCenterViewController *gcViewController;

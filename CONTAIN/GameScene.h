@@ -121,6 +121,7 @@
     SKAction *mainu3move;
 }
 //method that pauses the game
++ (instancetype)sharedGameFunctions;
 - (void)setupPauseMenu;
 
 @end

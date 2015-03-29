@@ -36,18 +36,9 @@
 
 @implementation GameViewController
 
-+ (instancetype)sharedViewActions {
-    static GameViewController *sharedViewActions;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedViewActions = [[GameViewController alloc] init];
-    });
-    return sharedViewActions;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    SKView * skView = (SKView *)self.view;
+    SKView *skView = (SKView *)self.view;
     //skView.showsFPS = YES;
     //skView.showsNodeCount = YES;
     //skView.ignoresSiblingOrder = YES;
