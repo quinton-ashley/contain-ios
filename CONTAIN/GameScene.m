@@ -16,7 +16,7 @@
 @implementation GameScene
 
 - (void)didMoveToView:(SKView *)view {
-    userInGame = userPlaying = userGameOver = userSelectMenu = false;
+    userInGame = userPlaying = userGameOver = userSelectMenu = userTutorial = false;
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
     //set game constants
     self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
@@ -185,10 +185,21 @@
     mainu2move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.5) duration:transitionTime];
     mainu3move = [SKAction moveTo:CGPointMake(midX, screenHeight-midX*2.9) duration:transitionTime];
     
-    playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
-    
     scorePosition = CGPointMake(midX/6, screenHeight-midX*3);
     energyPosition = CGPointMake(midX*1.82, screenHeight-midX*3);
+    
+    if (didBecomeActiveNotification == nil) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidBecomeActive)
+                                                     name:UIApplicationDidBecomeActiveNotification
+                                                   object:didBecomeActiveNotification];
+    }
+    if (willResignActiveNotification == nil) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillResignActive)
+                                                     name:UIApplicationWillResignActiveNotification
+                                                   object:willResignActiveNotification];
+    }
     
     userFromLoad = true;
     
@@ -203,8 +214,10 @@
 }
 
 - (void)setupMainMenu { //this menu can be accessed from the load screen, pause menu, game over menu, how to menu, and the high score list
+    self.paused = false;
     if (userFromLoad) {
         //omits the 0 object in each array on purpose because they are already display on the load screen
+        numContain = -1;
         for (int i=1; i<4; i++) {
             [self addChild:universalArray[i]];
         }
@@ -249,6 +262,7 @@
 }
 
 - (void)setupSelectMenu { //this menu can only be acessed through the main menu
+    self.paused = false;
     for (int i=0; i<mainArray.count; i++) {
         [mainArray[i] removeFromParent];
     }
@@ -265,11 +279,14 @@
 }
 
 -(void)viewHighScores {
+    self.paused = false;
     [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
 }
 
 -(void)setupHowToPlay {
-    
+    self.paused = false;
+    userTutorial = true;
+    numContain = 0;
 }
 
 - (void)setupGameButtons { //the game buttons user interface can be set up through the pause menu, game over menu, and select difficulty menu
@@ -298,6 +315,7 @@
         if (userGameOver) {
             //remove end game stats
         } else {
+            playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
             self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
             userPlaying = true;
             self.paused = false;
@@ -317,7 +335,19 @@
         [self addChild:universalArray[8]];
         [gameArray[2] removeFromParent];
         [gameArray[4] removeFromParent];
+        [playTimer invalidate];
+        playTimer = nil;
     }
+}
+
+- (void)applicationDidBecomeActive {
+    if (userInGame && !userPlaying) {
+        self.paused = true;
+    }
+}
+
+- (void)applicationWillResignActive {
+    [self setupPauseMenu];
 }
 
 - (void)gameOver {
@@ -349,6 +379,8 @@
         [paddleArray[i] removeFromParent];
     }
     [energyBar removeFromParent];
+    [playTimer invalidate];
+    playTimer = nil;
     if (numContain == 1) {
         [self reportScore:@"contain.score.leaderboard"];
     } else if (numContain == 2) {
@@ -372,6 +404,7 @@
 }
 
 - (void)startGame {
+    playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
     numBalls = angle = playTime = 0;
     item = -1;
@@ -463,6 +496,7 @@
                 else if (CGRectContainsPoint([universalArray[2] frame], location)) {
                     [self viewHighScores];
                 } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
+                    userMainMenu = false;
                     [self setupHowToPlay];
                 }
             } else if (userSelectMenu) {
@@ -678,4 +712,3 @@
 }
 
 @end
-

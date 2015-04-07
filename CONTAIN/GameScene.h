@@ -62,6 +62,10 @@
     //the angle of rotation of the circle of paddles
     double angle;
     
+    /*item is set to: -1 when the player does not have an item
+                       0 when the player has an addBall item
+                       1 when the player has an energyRefill item
+     */
     int item;
     
     //time values
@@ -78,24 +82,34 @@
     bool userMainMenu;
     bool userSelectMenu;
     bool userGameOver;
+    bool userTutorial;
     
     //boolean for if the paddles radi must be changed
     //bool changePadRadius;
     
     double transitionTime;
     
+    //constant for the value of the players energy at 100%
     int energy0;
+    //the players actual energy in game
     int energy;
+    //the energy bar's y value
     int eBarY;
+    //the energy bar's height value
     int eBarHeight;
     
+    //the visual representation of a player's energy
     SKShapeNode *energyBar;
+    //numerical representation of the player's score
     SKLabelNode *scoreLabel;
+    //numerical representation of the player's energy
     SKLabelNode *energyLabel;
-    
+    //the posistion of the scoreLabel
     CGPoint scorePosition;
+    //the position of the energyLabel
     CGPoint energyPosition;
     
+    //various actions the UI elements of the game can perform
     SKAction *rotaten90;
     SKAction *rotate90;
     
@@ -119,9 +133,11 @@
     SKAction *mainu1move;
     SKAction *mainu2move;
     SKAction *mainu3move;
+    
+    NSNotification *didBecomeActiveNotification;
+    NSNotification *willResignActiveNotification;
 }
 //method that pauses the game
 + (instancetype)sharedGameFunctions;
-- (void)setupPauseMenu;
 
 @end

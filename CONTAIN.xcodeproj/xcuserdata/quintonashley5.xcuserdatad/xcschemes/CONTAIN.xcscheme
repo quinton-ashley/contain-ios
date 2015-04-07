@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-               BuildableName = "CONTAIN!.app"
+               BuildableName = "CONTAIN.app"
                BlueprintName = "CONTAIN"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F15C1A4388F000CF3D84"
-               BuildableName = "CONTAIN!Tests.xctest"
+               BuildableName = "CONTAINTests.xctest"
                BlueprintName = "CONTAINTests"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3327F15C1A4388F000CF3D84"
-               BuildableName = "CONTAIN!Tests.xctest"
+               BuildableName = "CONTAINTests.xctest"
                BlueprintName = "CONTAINTests"
                ReferencedContainer = "container:CONTAIN.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN!.app"
+            BuildableName = "CONTAIN.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN!.app"
+            BuildableName = "CONTAIN.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3327F13E1A4388EF00CF3D84"
-            BuildableName = "CONTAIN!.app"
+            BuildableName = "CONTAIN.app"
             BlueprintName = "CONTAIN"
             ReferencedContainer = "container:CONTAIN.xcodeproj">
          </BuildableReference>

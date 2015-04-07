@@ -39,8 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     SKView *skView = (SKView *)self.view;
-    //skView.showsFPS = YES;
-    //skView.showsNodeCount = YES;
+    skView.showsFPS = YES;
+    skView.showsNodeCount = YES;
     //skView.ignoresSiblingOrder = YES;
     GameScene *scene = [[GameScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     [skView presentScene:scene];
