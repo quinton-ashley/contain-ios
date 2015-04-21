@@ -40,6 +40,7 @@
     energy0 = 400;
     eBarHeight = midX/150;
     eBarY = screenHeight-midX*2.1;
+    item = -1;
     
     SKShapeNode *border1 = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(screenWidth+40, 10)];
     border1.fillColor = [UIColor clearColor];
@@ -240,7 +241,9 @@
         [universalArray[4] removeFromParent];
         [universalArray[5] removeFromParent];
         [universalArray[6] removeFromParent];
-        [universalArray[8] removeFromParent];
+        if (!userTutorial) {
+            [universalArray[8] removeFromParent];
+        }
         [gameArray[5] removeFromParent];
         [gameArray[6] removeFromParent];
         if (scoreLabel != nil) {
@@ -256,6 +259,7 @@
         for (int i=0; i<mainArray.count; i++) {
             [self addChild:mainArray[i]];
         }
+        userTutorial = false;
         userInGame = false;
     }
     userMainMenu = true;
@@ -284,15 +288,22 @@
 }
 
 -(void)setupHowToPlay {
-    self.paused = false;
     userTutorial = true;
-    numContain = 0;
+    numContain = 1;
+    [self setupGameButtons];
+    [self startGame];
 }
 
-- (void)setupGameButtons { //the game buttons user interface can be set up through the pause menu, game over menu, and select difficulty menu
+- (void)setupGameButtons { //the game buttons user interface can be set up through the pause menu, game over menu, and select difficulty menu, or main menu via the tutorial
     [universalArray[0] runAction:gameu0resize];
     [universalArray[0] runAction:gameu2move];
-    [self addChild:gameArray[2]];
+    if (item == -1) {
+        [self addChild:gameArray[2]];
+    } else if (item == 0) {
+        [self addChild:gameArray[1]];
+    } else if (item == 1) {
+        [self addChild:gameArray[3]];
+    }
     [self addChild:gameArray[4]];
     if (userSelectMenu) {
         [universalArray[2] runAction:gameu2resize];
@@ -309,9 +320,27 @@
             [selectArray[i] removeFromParent];
         }
         userSelectMenu = false;
+    } else if (userMainMenu) {
+        [universalArray[1] runAction:pauseboxresize];
+        [universalArray[2] runAction:gameu2resize];
+        [universalArray[3] runAction:pauseboxresize];
+        [universalArray[1] runAction:rotaten90];
+        [universalArray[3] runAction:rotate90];
+        [universalArray[1] runAction:gameu1move];
+        [universalArray[2] runAction:gameu2move];
+        [universalArray[3] runAction:gameu3move];
+        [self addChild:universalArray[4]];
+        [self addChild:universalArray[5]];
+        [self addChild:gameArray[5]];
+        [self addChild:gameArray[6]];
+        for (int i=0; i<mainArray.count; i++) {
+            [mainArray[i] removeFromParent];
+        }
+        userMainMenu = false;
     } else if (!userPlaying) {
         [universalArray[6] removeFromParent];
         [universalArray[8] removeFromParent];
+        //delete item pictures
         if (userGameOver) {
             //remove end game stats
         } else {
@@ -325,7 +354,7 @@
 }
 
 - (void)setupPauseMenu {
-    if (userInGame && userPlaying) {
+    if (userInGame && userPlaying && !userTutorial) {
         self.backgroundColor = [SKColor colorWithWhite:0.4 alpha:1];
         userPlaying = false;
         self.paused = true;
@@ -333,7 +362,14 @@
         [self addChild:universalArray[6]];
         [self addChild:universalArray[7]];
         [self addChild:universalArray[8]];
-        [gameArray[2] removeFromParent];
+        if (item == -1) {
+            [gameArray[2] removeFromParent];
+        } else if (item == 0) {
+            [gameArray[1] removeFromParent];
+        } else if (item == 1) {
+            [gameArray[3] removeFromParent];
+        }
+        
         [gameArray[4] removeFromParent];
         [playTimer invalidate];
         playTimer = nil;
@@ -341,13 +377,20 @@
 }
 
 - (void)applicationDidBecomeActive {
-    if (userInGame && !userPlaying) {
+    if (userInGame && !userPlaying && !userTutorial) {
         self.paused = true;
     }
 }
 
 - (void)applicationWillResignActive {
-    [self setupPauseMenu];
+    if (userTutorial) {
+        [self gameOver];
+        [gameArray[2] removeFromParent];
+        [gameArray[4] removeFromParent];
+        [self setupMainMenu];
+    } else {
+        [self setupPauseMenu];
+    }
 }
 
 - (void)gameOver {
@@ -358,7 +401,9 @@
         [universalArray[0] runAction:overu0resize];
         [universalArray[0] runAction:pauseu0move];
         [self addChild:universalArray[6]];
-        [self addChild:universalArray[8]];
+        if (!userTutorial) {
+            [self addChild:universalArray[8]];
+        }
         [gameArray[1] removeFromParent];
         [gameArray[2] removeFromParent];
         [gameArray[3] removeFromParent];
@@ -381,12 +426,14 @@
     [energyBar removeFromParent];
     [playTimer invalidate];
     playTimer = nil;
-    if (numContain == 1) {
-        [self reportScore:@"contain.score.leaderboard"];
-    } else if (numContain == 2) {
-        [self reportScore:@"contain.score.leaderboard2"];
-    } else if (numContain == 3) {
-        [self reportScore:@"contain.score.leaderboard3"];
+    if (!userTutorial) {
+        if (numContain == 1) {
+            [self reportScore:@"contain.score.leaderboard"];
+        } else if (numContain == 2) {
+            [self reportScore:@"contain.score.leaderboard2"];
+        } else if (numContain == 3) {
+            [self reportScore:@"contain.score.leaderboard3"];
+        }
     }
     userPlaying = userInGame = false;
 }
@@ -404,12 +451,15 @@
 }
 
 - (void)startGame {
+    if (playTimer != nil) {
+        [playTimer invalidate];
+        playTimer = nil;
+    }
     playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
     numBalls = angle = playTime = 0;
     item = -1;
     numPaddles = 8;
-    ballTime = 2;
     ballSpeedFactor = 1100;
     energy = energy0;
     energyBar = [SKShapeNode shapeNodeWithRect:CGRectMake(0, eBarY, midX*2, eBarHeight)];
@@ -433,9 +483,14 @@
     energyLabel.fontSize = 20;
     energyLabel.fontName = @"AvenirNext-Regular";
     [self addChild:energyLabel];
-    [self addBall];
-    if (numContain > 1) {
+    if (userTutorial) {
+        ballTime = -1;
+    } else {
+        ballTime = 2;
         [self addBall];
+        if (numContain > 1) {
+            [self addBall];
+        }
     }
     padRadius = padRadius0;
     padPath = CGPathCreateMutable();
@@ -480,6 +535,14 @@
                 [node setAlpha:1.0];
             }
         }];
+        if (userTutorial) {
+            if (playTime == 5) {
+                [self addBall];
+            } else if (playTime == 8) {
+                userGameOver = true;
+                [self gameOver];
+            }
+        }
     }
 }
 
@@ -496,7 +559,6 @@
                 else if (CGRectContainsPoint([universalArray[2] frame], location)) {
                     [self viewHighScores];
                 } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
-                    userMainMenu = false;
                     [self setupHowToPlay];
                 }
             } else if (userSelectMenu) {
@@ -514,7 +576,7 @@
             } else if (userGameOver) {
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
                     [self setupMainMenu];
-                } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
+                } else if (CGRectContainsPoint([universalArray[3] frame], location) && !userTutorial) {
                     [self setupGameButtons];
                     [self startGame];
                 }
@@ -658,12 +720,12 @@
             int chance = arc4random_uniform(100);
             if ([[firstBody.node name] isEqualToString:@"ball_blink"]) {
                 [firstBody.node setAlpha:0.4];
-                double vectorTotal = abs(firstBody.node.position.x - secondBody.node.position.x) + abs(firstBody.node.position.y - secondBody.node.position.y);
+                double vectorTotal = fabs(firstBody.node.position.x - secondBody.node.position.x) + fabs(firstBody.node.position.y - secondBody.node.position.y);
                 double multi = (midX*(ballSpeedFactor/10000))/vectorTotal;
                 firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi*3, (firstBody.node.position.y - secondBody.node.position.y)*multi*3);
                 firstBody.node.name = @"ball_speedshift";
             } else {
-                if (chance < 8 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
+                if (chance < 100 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
                     firstBody.node.name = @"ball_blink";
                 } else {
                     if ([[firstBody.node name] isEqualToString:@"ball_speedshift"] && item == -1) {
@@ -679,7 +741,7 @@
                     [firstBody.node setAlpha:1.0];
                     firstBody.node.name = @"ball_normal";
                 }
-                double vectorTotal = abs(firstBody.node.position.x - secondBody.node.position.x) + abs(firstBody.node.position.y - secondBody.node.position.y);
+                double vectorTotal = fabs(firstBody.node.position.x - secondBody.node.position.x) + fabs(firstBody.node.position.y - secondBody.node.position.y);
                 double multi = (midX*(ballSpeedFactor/10000))/vectorTotal;
                 firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi, (firstBody.node.position.y - secondBody.node.position.y)*multi);
             }
@@ -692,8 +754,13 @@
             [firstBody.node removeFromParent];
             numBalls--;
             if (numBalls == numContain-1) {
-                userGameOver = true;
-                [self gameOver];
+                if (userTutorial) {
+                    [self addBall];
+                    //tutorial
+                } else {
+                    userGameOver = true;
+                    [self gameOver];
+                }
             } else {
                 self.backgroundColor = [SKColor colorWithWhite:0.2 alpha:1];
                 [self performSelector:@selector(screenFlash) withObject:nil afterDelay:0.1];
