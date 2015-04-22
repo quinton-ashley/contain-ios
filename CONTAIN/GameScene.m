@@ -537,8 +537,9 @@
         }];
         if (userTutorial) {
             if (playTime == 5) {
-                [self addBall];
-            } else if (playTime == 8) {
+                ballVector = CGVectorMake(0, -midX*(ballSpeedFactor/10000));
+                [self addTutorialBall];
+            } else if (playTime == 4) {
                 userGameOver = true;
                 [self gameOver];
             }
@@ -547,7 +548,6 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         if (!userInGame) {
@@ -679,6 +679,13 @@
     numBalls++;
 }
 
+- (void)addTutorialBall {
+    Ball *newBall = [Ball newBallWithRadiusOf:ballRadius atPoint:center withVector:ballVector];
+    newBall.name = @"ball_normal";
+    [self addChild:newBall];
+    numBalls++;
+}
+
 //-(void)changePadsSize {
 //    if ((padRadius < padRadiusChange && padRadius > padRadiusChange-5) || (padRadius > padRadiusChange && padRadius < padRadiusChange+5)) {
 //        changePadRadius = false;
@@ -725,7 +732,7 @@
                 firstBody.velocity = CGVectorMake((firstBody.node.position.x - secondBody.node.position.x)*multi*3, (firstBody.node.position.y - secondBody.node.position.y)*multi*3);
                 firstBody.node.name = @"ball_speedshift";
             } else {
-                if (chance < 100 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
+                if (chance < 10 && [[firstBody.node name] isEqualToString:@"ball_normal"]) {
                     firstBody.node.name = @"ball_blink";
                 } else {
                     if ([[firstBody.node name] isEqualToString:@"ball_speedshift"] && item == -1) {
@@ -755,8 +762,8 @@
             numBalls--;
             if (numBalls == numContain-1) {
                 if (userTutorial) {
-                    [self addBall];
-                    //tutorial
+                    playTime = 4;
+                    //notify tutorial
                 } else {
                     userGameOver = true;
                     [self gameOver];

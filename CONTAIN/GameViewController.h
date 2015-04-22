@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 #import <GameKit/GameKit.h>
+#import <iAd/iAd.h>
 
-@interface GameViewController : UIViewController <GKGameCenterControllerDelegate>
+@interface GameViewController : UIViewController <GKGameCenterControllerDelegate, ADBannerViewDelegate>
 
 -(void)showGameCenterViewController:(NSNotification *)notification;
 

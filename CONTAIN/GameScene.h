@@ -42,6 +42,9 @@
     //radius of the ball
     CGFloat ballRadius;
     
+    //the vector assigned to balls in tutorial mode
+    CGVector ballVector;
+    
     //the speed at which the paddles move
     double ballSpeedFactor;
     

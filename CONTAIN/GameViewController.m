@@ -9,7 +9,6 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 #import "GameKitHelper.h"
-#import <iAd/iAd.h>
 
 @implementation SKScene (Unarchive)
 
@@ -30,7 +29,10 @@
 
 @end
 
-@interface GameViewController() <GKGameCenterControllerDelegate>
+@interface GameViewController() <GKGameCenterControllerDelegate, ADBannerViewDelegate> {
+    BOOL _bannerIsVisible;
+    ADBannerView *_adBanner;
+}
 
 @end
 
@@ -39,9 +41,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     SKView *skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
-    //skView.ignoresSiblingOrder = YES;
     GameScene *scene = [[GameScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     [skView presentScene:scene];
 }
@@ -69,8 +68,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     if ([[UIScreen mainScreen] bounds].size.height > 550) {
         [super viewDidAppear:animated];
-        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, 320, 50)];
-        [self.view addSubview:adView];
+        _adBanner = [[ADBannerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, 320, 50)];
+        _adBanner.delegate = self;
+        [self.view addSubview:_adBanner];
     }
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter]
@@ -84,6 +84,20 @@
      name:PresentGameCenterViewController
      object:nil];
     [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    if (!_bannerIsVisible) {
+        banner.frame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
+        _bannerIsVisible = YES;
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    if (_bannerIsVisible) {
+        banner.frame = CGRectMake(0, self.view.frame.size.height+100, 320, 50);
+        _bannerIsVisible = NO;
+    }
 }
 
 - (BOOL)shouldAutorotate {

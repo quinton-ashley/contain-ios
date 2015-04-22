@@ -10,4 +10,5 @@
 
 @interface Ball : SKShapeNode
 + (id)newBallWithRadiusOf:(CGFloat)radius atPoint:(CGPoint)position withSpeed:(CGFloat)speed;
++ (id)newBallWithRadiusOf:(CGFloat)radius atPoint:(CGPoint)position withVector:(CGVector)vector;
 @end
