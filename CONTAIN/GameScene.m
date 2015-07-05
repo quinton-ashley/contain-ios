@@ -11,14 +11,12 @@
 #import "Paddle.h"
 #import "GameViewController.h"
 #import "GameKitHelper.h"
-#import <GameKit/GameKit.h>
 
 @implementation GameScene
 
 - (void)didMoveToView:(SKView *)view {
     userInGame = userPlaying = userGameOver = userSelectMenu = userTutorial = false;
     self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
-    //set game constants
     self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
     self.physicsWorld.contactDelegate = self;
     ballCategory    =  0x1 << 0;
@@ -159,7 +157,7 @@
     mainArray = [[NSMutableArray alloc] initWithObjects:m0, m1, m2, m3, nil];
     selectArray = [[NSMutableArray alloc] initWithObjects:s0, s1, s2, s3, nil];
     
-    paddleArray =  [[NSMutableArray alloc] initWithObjects: nil];
+    paddleArray = [[NSMutableArray alloc] initWithObjects:nil];
     
     rotaten90 = [SKAction rotateByAngle:-M_PI_2 duration:transitionTime];
     rotate90 = [SKAction rotateByAngle:M_PI_2 duration:transitionTime];
@@ -282,12 +280,12 @@
     userSelectMenu = true;
 }
 
--(void)viewHighScores {
+- (void)viewHighScores {
     self.paused = false;
     [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
 }
 
--(void)setupHowToPlay {
+- (void)setupHowToPlay {
     userTutorial = true;
     numContain = 1;
     [self setupGameButtons];
@@ -438,7 +436,7 @@
     userPlaying = userInGame = false;
 }
 
--(void)reportScore:(NSString *)leaderboardID {
+- (void)reportScore:(NSString *)leaderboardID {
     if ([GKLocalPlayer localPlayer].isAuthenticated) {
         GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID player:[GKLocalPlayer localPlayer]];
         score.value = playTime*5;
@@ -507,7 +505,7 @@
     userInGame = userPlaying = padRevolve = true;
 }
 
--(void)timePassed {
+- (void)timePassed {
     if (userPlaying) {
         playTime++;
         [scoreLabel removeFromParent];
@@ -555,8 +553,7 @@
                 if (CGRectContainsPoint([universalArray[1] frame], location)) {
                     userMainMenu = false;
                     [self setupSelectMenu];
-                }
-                else if (CGRectContainsPoint([universalArray[2] frame], location)) {
+                } else if (CGRectContainsPoint([universalArray[2] frame], location)) {
                     [self viewHighScores];
                 } else if (CGRectContainsPoint([universalArray[3] frame], location)) {
                     [self setupHowToPlay];
@@ -774,15 +771,6 @@
             }
         }
     }
-}
-
-+ (instancetype)sharedGameFunctions {
-    static GameScene *sharedGameFunctions;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedGameFunctions = [[GameScene alloc] init];
-    });
-    return sharedGameFunctions;
 }
 
 @end

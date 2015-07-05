@@ -69,4 +69,5 @@ NSString *const LocalPlayerIsAuthenticated = @"local_player_authenticated";
               [[_lastError userInfo] description]);
     }
 }
+
 @end

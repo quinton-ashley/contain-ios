@@ -140,7 +140,5 @@
     NSNotification *didBecomeActiveNotification;
     NSNotification *willResignActiveNotification;
 }
-//method that pauses the game
-+ (instancetype)sharedGameFunctions;
 
 @end

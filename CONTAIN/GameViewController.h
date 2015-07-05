@@ -13,7 +13,7 @@
 
 @interface GameViewController : UIViewController <GKGameCenterControllerDelegate, ADBannerViewDelegate>
 
--(void)showGameCenterViewController:(NSNotification *)notification;
+- (void)showGameCenterViewController:(NSNotification *)notification;
 
 @property (nonatomic, readonly) GKGameCenterViewController *gcViewController;
 

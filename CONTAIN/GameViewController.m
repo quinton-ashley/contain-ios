@@ -10,27 +10,7 @@
 #import "GameScene.h"
 #import "GameKitHelper.h"
 
-@implementation SKScene (Unarchive)
-
-+ (instancetype)unarchiveFromFile:(NSString *)file {
-    /* Retrieve scene file path from the application bundle */
-    NSString *nodePath = [[NSBundle mainBundle] pathForResource:file ofType:@"sks"];
-    /* Unarchive the file to an SKScene object */
-    NSData *data = [NSData dataWithContentsOfFile:nodePath
-                                          options:NSDataReadingMappedIfSafe
-                                            error:nil];
-    NSKeyedUnarchiver *arch = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    [arch setClass:self forClassName:@"SKScene"];
-    SKScene *scene = [arch decodeObjectForKey:NSKeyedArchiveRootObjectKey];
-    [arch finishDecoding];
-    
-    return scene;
-}
-
-@end
-
 @interface GameViewController() <GKGameCenterControllerDelegate, ADBannerViewDelegate> {
-    BOOL _bannerIsVisible;
     ADBannerView *_adBanner;
 }
 
@@ -50,7 +30,7 @@
     [self presentViewController:gameKitHelper.authenticationViewController animated:YES completion:nil];
 }
 
--(void)showGameCenterViewController:(NSNotification *)notification {
+- (void)showGameCenterViewController:(NSNotification *)notification {
     _gcViewController = [[GKGameCenterViewController alloc] init];
     _gcViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
     _gcViewController.gameCenterDelegate = self;
@@ -61,9 +41,9 @@
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+//- (void)dealloc {
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 
 - (void)viewDidAppear:(BOOL)animated {
     if ([[UIScreen mainScreen] bounds].size.height > 550) {
@@ -87,29 +67,11 @@
 }
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-    if (!_bannerIsVisible) {
-        banner.frame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
-        _bannerIsVisible = YES;
-    }
+    banner.frame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-    if (_bannerIsVisible) {
-        banner.frame = CGRectMake(0, self.view.frame.size.height+100, 320, 50);
-        _bannerIsVisible = NO;
-    }
-}
-
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
+    banner.frame = CGRectMake(0, self.view.frame.size.height+100, 320, 50);
 }
 
 - (void)didReceiveMemoryWarning {
