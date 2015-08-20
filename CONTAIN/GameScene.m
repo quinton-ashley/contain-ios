@@ -157,7 +157,7 @@
     mainArray = [[NSMutableArray alloc] initWithObjects:m0, m1, m2, m3, nil];
     selectArray = [[NSMutableArray alloc] initWithObjects:s0, s1, s2, s3, nil];
     
-    paddleArray = [[NSMutableArray alloc] initWithObjects:nil];
+    paddleArray = [[NSMutableArray alloc] init];
     
     rotaten90 = [SKAction rotateByAngle:-M_PI_2 duration:transitionTime];
     rotate90 = [SKAction rotateByAngle:M_PI_2 duration:transitionTime];
@@ -356,7 +356,7 @@
         self.backgroundColor = [SKColor colorWithWhite:0.4 alpha:1];
         userPlaying = false;
         self.paused = true;
-        [universalArray[0] setPosition:CGPointMake(midX, screenHeight-midX*4)];
+        [(CALayer *)universalArray[0] setPosition:CGPointMake(midX, screenHeight-midX*4)];
         [self addChild:universalArray[6]];
         [self addChild:universalArray[7]];
         [self addChild:universalArray[8]];
@@ -645,7 +645,7 @@
                 angle = 0;
             }
             for (int i=0; i<numPaddles; i++) {
-                [paddleArray[i] setPosition:CGPointMake((sin(GLKMathDegreesToRadians(angle+i*45))*midX)+midX, (cos(GLKMathDegreesToRadians(angle+i*45))*midX)+(screenHeight-midX))];
+                [(CALayer *)paddleArray[i] setPosition:CGPointMake((sin(GLKMathDegreesToRadians(angle+i*45))*midX)+midX, (cos(GLKMathDegreesToRadians(angle+i*45))*midX)+(screenHeight-midX))];
                 [paddleArray[i] setZRotation:-GLKMathDegreesToRadians(angle+8+i*45)];
             }
         } else {
@@ -714,8 +714,7 @@
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
         firstBody = contact.bodyA;
         secondBody = contact.bodyB;
-    }
-    else {
+    } else {
         firstBody = contact.bodyB;
         secondBody = contact.bodyA;
     }
