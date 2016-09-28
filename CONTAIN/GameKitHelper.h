@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Quinton Ashley. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 @import GameKit;
 extern NSString *const PresentAuthenticationViewController;
 extern NSString *const PresentGameCenterViewController;
@@ -20,3 +22,5 @@ extern NSString *const LocalPlayerIsAuthenticated;
 - (void)authenticateLocalPlayer;
 
 @end
+
+#endif

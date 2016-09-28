@@ -5,6 +5,7 @@
 
 //  Copyright (c) 2014 Quinton Ashley. All rights reserved.
 //
+#if TARGET_OS_IPHONE
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
@@ -18,3 +19,5 @@
 @property (nonatomic, readonly) GKGameCenterViewController *gcViewController;
 
 @end
+
+#endif

@@ -23,6 +23,16 @@
 		337BCCEE1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
 		337BCCEF1A6634C400C61BDB /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
 		337F7C331AAD4FE4006329B2 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337F7C321AAD4FE3006329B2 /* iAd.framework */; };
+		33E21A7D1D9C013F00822EB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E21A7C1D9C013F00822EB9 /* AppDelegate.m */; };
+		33E21A801D9C013F00822EB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E21A7F1D9C013F00822EB9 /* main.m */; };
+		33E21A8A1D9C013F00822EB9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E21A891D9C013F00822EB9 /* ViewController.m */; };
+		33E21A8F1D9C013F00822EB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E21A8D1D9C013F00822EB9 /* Main.storyboard */; };
+		33E21A9A1D9C013F00822EB9 /* ContainMacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E21A991D9C013F00822EB9 /* ContainMacTests.m */; };
+		33E21AA51D9C013F00822EB9 /* ContainMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E21AA41D9C013F00822EB9 /* ContainMacUITests.m */; };
+		33E21AB01D9C021F00822EB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3327F1541A4388F000CF3D84 /* Images.xcassets */; };
+		33E21AB11D9C046100822EB9 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3327F14A1A4388EF00CF3D84 /* GameScene.m */; };
+		33E21AB21D9C047600822EB9 /* Ball.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCE71A65D63B00C61BDB /* Ball.m */; };
+		33E21AB31D9C047E00822EB9 /* Paddle.m in Sources */ = {isa = PBXBuildFile; fileRef = 337BCCED1A6634C400C61BDB /* Paddle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +42,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3327F13E1A4388EF00CF3D84;
 			remoteInfo = CONTAIN;
+		};
+		33E21A961D9C013F00822EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3327F1371A4388EF00CF3D84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33E21A781D9C013F00822EB9;
+			remoteInfo = ContainMac;
+		};
+		33E21AA11D9C013F00822EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3327F1371A4388EF00CF3D84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33E21A781D9C013F00822EB9;
+			remoteInfo = ContainMac;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -60,6 +84,25 @@
 		337BCCEC1A6634AC00C61BDB /* Paddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paddle.h; sourceTree = "<group>"; };
 		337BCCED1A6634C400C61BDB /* Paddle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Paddle.m; sourceTree = "<group>"; };
 		337F7C321AAD4FE3006329B2 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		33E21A791D9C013F00822EB9 /* ContainMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContainMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33E21A7B1D9C013F00822EB9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		33E21A7C1D9C013F00822EB9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		33E21A7F1D9C013F00822EB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		33E21A811D9C013F00822EB9 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		33E21A831D9C013F00822EB9 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		33E21A851D9C013F00822EB9 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		33E21A861D9C013F00822EB9 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		33E21A881D9C013F00822EB9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		33E21A891D9C013F00822EB9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		33E21A8B1D9C013F00822EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		33E21A8E1D9C013F00822EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		33E21A901D9C013F00822EB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33E21A951D9C013F00822EB9 /* ContainMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContainMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33E21A991D9C013F00822EB9 /* ContainMacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContainMacTests.m; sourceTree = "<group>"; };
+		33E21A9B1D9C013F00822EB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33E21AA01D9C013F00822EB9 /* ContainMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContainMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33E21AA41D9C013F00822EB9 /* ContainMacUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContainMacUITests.m; sourceTree = "<group>"; };
+		33E21AA61D9C013F00822EB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +123,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		33E21A761D9C013F00822EB9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A921D9C013F00822EB9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A9D1D9C013F00822EB9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -91,6 +155,9 @@
 				337BCCEA1A6620C100C61BDB /* SpriteKit.framework */,
 				3327F1411A4388EF00CF3D84 /* CONTAIN */,
 				3327F1601A4388F000CF3D84 /* CONTAINTests */,
+				33E21A7A1D9C013F00822EB9 /* ContainMac */,
+				33E21A981D9C013F00822EB9 /* ContainMacTests */,
+				33E21AA31D9C013F00822EB9 /* ContainMacUITests */,
 				3327F1401A4388EF00CF3D84 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +167,9 @@
 			children = (
 				3327F13F1A4388EF00CF3D84 /* CONTAIN.app */,
 				3327F15D1A4388F000CF3D84 /* CONTAINTests.xctest */,
+				33E21A791D9C013F00822EB9 /* ContainMac.app */,
+				33E21A951D9C013F00822EB9 /* ContainMacTests.xctest */,
+				33E21AA01D9C013F00822EB9 /* ContainMacUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +223,51 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		33E21A7A1D9C013F00822EB9 /* ContainMac */ = {
+			isa = PBXGroup;
+			children = (
+				33E21A7B1D9C013F00822EB9 /* AppDelegate.h */,
+				33E21A7C1D9C013F00822EB9 /* AppDelegate.m */,
+				33E21A811D9C013F00822EB9 /* GameScene.sks */,
+				33E21A831D9C013F00822EB9 /* Actions.sks */,
+				33E21A851D9C013F00822EB9 /* GameScene.h */,
+				33E21A861D9C013F00822EB9 /* GameScene.m */,
+				33E21A881D9C013F00822EB9 /* ViewController.h */,
+				33E21A891D9C013F00822EB9 /* ViewController.m */,
+				33E21A8B1D9C013F00822EB9 /* Assets.xcassets */,
+				33E21A8D1D9C013F00822EB9 /* Main.storyboard */,
+				33E21A901D9C013F00822EB9 /* Info.plist */,
+				33E21A7E1D9C013F00822EB9 /* Supporting Files */,
+			);
+			path = ContainMac;
+			sourceTree = "<group>";
+		};
+		33E21A7E1D9C013F00822EB9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				33E21A7F1D9C013F00822EB9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		33E21A981D9C013F00822EB9 /* ContainMacTests */ = {
+			isa = PBXGroup;
+			children = (
+				33E21A991D9C013F00822EB9 /* ContainMacTests.m */,
+				33E21A9B1D9C013F00822EB9 /* Info.plist */,
+			);
+			path = ContainMacTests;
+			sourceTree = "<group>";
+		};
+		33E21AA31D9C013F00822EB9 /* ContainMacUITests */ = {
+			isa = PBXGroup;
+			children = (
+				33E21AA41D9C013F00822EB9 /* ContainMacUITests.m */,
+				33E21AA61D9C013F00822EB9 /* Info.plist */,
+			);
+			path = ContainMacUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -191,6 +306,59 @@
 			productReference = 3327F15D1A4388F000CF3D84 /* CONTAINTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		33E21A781D9C013F00822EB9 /* ContainMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33E21AA71D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMac" */;
+			buildPhases = (
+				33E21A751D9C013F00822EB9 /* Sources */,
+				33E21A761D9C013F00822EB9 /* Frameworks */,
+				33E21A771D9C013F00822EB9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContainMac;
+			productName = ContainMac;
+			productReference = 33E21A791D9C013F00822EB9 /* ContainMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		33E21A941D9C013F00822EB9 /* ContainMacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33E21AAA1D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMacTests" */;
+			buildPhases = (
+				33E21A911D9C013F00822EB9 /* Sources */,
+				33E21A921D9C013F00822EB9 /* Frameworks */,
+				33E21A931D9C013F00822EB9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33E21A971D9C013F00822EB9 /* PBXTargetDependency */,
+			);
+			name = ContainMacTests;
+			productName = ContainMacTests;
+			productReference = 33E21A951D9C013F00822EB9 /* ContainMacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		33E21A9F1D9C013F00822EB9 /* ContainMacUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33E21AAD1D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMacUITests" */;
+			buildPhases = (
+				33E21A9C1D9C013F00822EB9 /* Sources */,
+				33E21A9D1D9C013F00822EB9 /* Frameworks */,
+				33E21A9E1D9C013F00822EB9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33E21AA21D9C013F00822EB9 /* PBXTargetDependency */,
+			);
+			name = ContainMacUITests;
+			productName = ContainMacUITests;
+			productReference = 33E21AA01D9C013F00822EB9 /* ContainMacUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -202,7 +370,7 @@
 				TargetAttributes = {
 					3327F13E1A4388EF00CF3D84 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = A794UT4LTE;
+						DevelopmentTeam = 694UE597PK;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -212,6 +380,23 @@
 					3327F15C1A4388F000CF3D84 = {
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 3327F13E1A4388EF00CF3D84;
+					};
+					33E21A781D9C013F00822EB9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 694UE597PK;
+						ProvisioningStyle = Automatic;
+					};
+					33E21A941D9C013F00822EB9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 694UE597PK;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 33E21A781D9C013F00822EB9;
+					};
+					33E21A9F1D9C013F00822EB9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 694UE597PK;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 33E21A781D9C013F00822EB9;
 					};
 				};
 			};
@@ -230,6 +415,9 @@
 			targets = (
 				3327F13E1A4388EF00CF3D84 /* CONTAIN */,
 				3327F15C1A4388F000CF3D84 /* CONTAINTests */,
+				33E21A781D9C013F00822EB9 /* ContainMac */,
+				33E21A941D9C013F00822EB9 /* ContainMacTests */,
+				33E21A9F1D9C013F00822EB9 /* ContainMacUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -246,6 +434,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3327F15B1A4388F000CF3D84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A771D9C013F00822EB9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E21AB01D9C021F00822EB9 /* Images.xcassets in Resources */,
+				33E21A8F1D9C013F00822EB9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A931D9C013F00822EB9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A9E1D9C013F00822EB9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -279,6 +490,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		33E21A751D9C013F00822EB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E21AB21D9C047600822EB9 /* Ball.m in Sources */,
+				33E21A801D9C013F00822EB9 /* main.m in Sources */,
+				33E21A8A1D9C013F00822EB9 /* ViewController.m in Sources */,
+				33E21AB31D9C047E00822EB9 /* Paddle.m in Sources */,
+				33E21AB11D9C046100822EB9 /* GameScene.m in Sources */,
+				33E21A7D1D9C013F00822EB9 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A911D9C013F00822EB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E21A9A1D9C013F00822EB9 /* ContainMacTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33E21A9C1D9C013F00822EB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33E21AA51D9C013F00822EB9 /* ContainMacUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -286,6 +526,16 @@
 			isa = PBXTargetDependency;
 			target = 3327F13E1A4388EF00CF3D84 /* CONTAIN */;
 			targetProxy = 3327F15E1A4388F000CF3D84 /* PBXContainerItemProxy */;
+		};
+		33E21A971D9C013F00822EB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33E21A781D9C013F00822EB9 /* ContainMac */;
+			targetProxy = 33E21A961D9C013F00822EB9 /* PBXContainerItemProxy */;
+		};
+		33E21AA21D9C013F00822EB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33E21A781D9C013F00822EB9 /* ContainMac */;
+			targetProxy = 33E21AA11D9C013F00822EB9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -304,6 +554,14 @@
 				3327F1571A4388F000CF3D84 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		33E21A8D1D9C013F00822EB9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				33E21A8E1D9C013F00822EB9 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -392,10 +650,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 694UE597PK;
 				INFOPLIST_FILE = CONTAIN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "David-Ashley.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Quinton-Ashley.CONTAIN";
 				PRODUCT_NAME = CONTAIN;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -408,10 +667,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 694UE597PK;
 				INFOPLIST_FILE = CONTAIN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "David-Ashley.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "Quinton-Ashley.CONTAIN";
 				PRODUCT_NAME = CONTAIN;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -454,6 +714,143 @@
 			};
 			name = Release;
 		};
+		33E21AA81D9C013F00822EB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		33E21AA91D9C013F00822EB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMac/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		33E21AAB1D9C013F00822EB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMacTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContainMac.app/Contents/MacOS/ContainMac";
+			};
+			name = Debug;
+		};
+		33E21AAC1D9C013F00822EB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMacTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContainMac.app/Contents/MacOS/ContainMac";
+			};
+			name = Release;
+		};
+		33E21AAE1D9C013F00822EB9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMacUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = ContainMac;
+			};
+			name = Debug;
+		};
+		33E21AAF1D9C013F00822EB9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 694UE597PK;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ContainMacUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qashto.ContainMacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = ContainMac;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -483,6 +880,30 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		33E21AA71D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33E21AA81D9C013F00822EB9 /* Debug */,
+				33E21AA91D9C013F00822EB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		33E21AAA1D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33E21AAB1D9C013F00822EB9 /* Debug */,
+				33E21AAC1D9C013F00822EB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		33E21AAD1D9C013F00822EB9 /* Build configuration list for PBXNativeTarget "ContainMacUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33E21AAE1D9C013F00822EB9 /* Debug */,
+				33E21AAF1D9C013F00822EB9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
