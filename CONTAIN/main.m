@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "CONTAIN-Swift.h"
 
 #if TARGET_OS_IPHONE
 

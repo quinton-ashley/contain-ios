@@ -345,7 +345,7 @@
 }
 
 - (void)setupMainMenu { //this menu can be accessed from the load screen, pause menu, game over menu, how to menu, and the high score list
-  self.paused = false;
+  _pauseGame = false;
   if (userFromLoad) {
     //omits the 0 object in each array on purpose because they are already display on the load screen
     numContain = -1;
@@ -396,7 +396,7 @@
 }
 
 - (void)setupSelectMenu { //this menu can only be acessed through the main menu
-  self.paused = false;
+  _pauseGame = false;
   for (int i=0; i<mainArray.count; i++) {
     [mainArray[i] removeFromParent];
   }
@@ -413,10 +413,10 @@
 }
 
 - (void)viewHighScores {
-  self.paused = false;
-#if TARGET_OS_IPHONE
-  [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
-#endif
+  _pauseGame = false;
+//#if TARGET_OS_IPHONE
+//  [[NSNotificationCenter defaultCenter] postNotificationName:PresentGameCenterViewController object:self userInfo:nil];
+//#endif
 }
 
 - (void)setupHowToPlay {
@@ -479,7 +479,7 @@
       playTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePassed) userInfo:nil repeats:YES];
       self.backgroundColor = [SKColor colorWithWhite:0.05 alpha:1];
       userPlaying = true;
-      self.paused = false;
+      _pauseGame = false;
       [universalArray[7] removeFromParent];
     }
   }
@@ -489,7 +489,7 @@
   if (userInGame && userPlaying && !userTutorial) {
     self.backgroundColor = [SKColor colorWithWhite:0.4 alpha:1];
     userPlaying = false;
-    self.paused = true;
+    _pauseGame = true;
     [(CALayer *)universalArray[0] setPosition:CGPointMake(midX, screenHeight-midX*4)];
     [self addChild:universalArray[6]];
     [self addChild:universalArray[7]];
@@ -510,7 +510,7 @@
 
 - (void)applicationDidBecomeActive {
   if (userInGame && !userPlaying && !userTutorial) {
-    self.paused = true;
+    _pauseGame = true;
   }
 }
 
@@ -541,7 +541,7 @@
     [gameArray[3] removeFromParent];
     [gameArray[4] removeFromParent];
   } else {
-    self.paused = false;
+    _pauseGame = false;
   }
   [self enumerateChildNodesWithName:@"ball_normal" usingBlock:^(SKNode *node, BOOL *stop) {
     [node removeFromParent];
@@ -558,32 +558,32 @@
   [energyBar removeFromParent];
   [playTimer invalidate];
   playTimer = nil;
-#if TARGET_OS_IPHONE
-  if (!userTutorial) {
-    if (numContain == 1) {
-      [self reportScore:@"contain.score.leaderboard"];
-    } else if (numContain == 2) {
-      [self reportScore:@"contain.score.leaderboard2"];
-    } else if (numContain == 3) {
-      [self reportScore:@"contain.score.leaderboard3"];
-    }
-  }
-#endif
+//#if TARGET_OS_IPHONE
+//  if (!userTutorial) {
+//    if (numContain == 1) {
+//      [self reportScore:@"contain.score.leaderboard"];
+//    } else if (numContain == 2) {
+//      [self reportScore:@"contain.score.leaderboard2"];
+//    } else if (numContain == 3) {
+//      [self reportScore:@"contain.score.leaderboard3"];
+//    }
+//  }
+//#endif
   userPlaying = userInGame = false;
 }
-#if TARGET_OS_IPHONE
-- (void)reportScore:(NSString *)leaderboardID {
-  if ([GKLocalPlayer localPlayer].isAuthenticated) {
-    GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID player:[GKLocalPlayer localPlayer]];
-    score.value = playTime*5;
-    [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
-      if (error != nil) {
-        NSLog(@"%@", [error localizedDescription]);
-      }
-    }];
-  }
-}
-#endif
+//#if TARGET_OS_IPHONE
+//- (void)reportScore:(NSString *)leaderboardID {
+//  if ([GKLocalPlayer localPlayer].isAuthenticated) {
+//    GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID player:[GKLocalPlayer localPlayer]];
+//    score.value = playTime*5;
+//    [GKScore reportScores:@[score] withCompletionHandler:^(NSError *error) {
+//      if (error != nil) {
+//        NSLog(@"%@", [error localizedDescription]);
+//      }
+//    }];
+//  }
+//}
+//#endif
 
 - (void)startGame {
   if (playTimer != nil) {
@@ -692,7 +692,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
   for (UITouch *touch in touches) {
-    [self response0:[touch locationInNode:self]];
+    [self response1:[touch locationInNode:self]];
   }
 }
 
@@ -765,7 +765,7 @@
           for (int i=0; i<numPaddles; i++) {
 //            [paddleArray[i] setFillColor:[SKColor whiteColor].CGColor];
           }
-          [self addChild:gameArray[0]];
+//          [self addChild:gameArray[0]];
         } else {
           if (CGRectContainsPoint([universalArray[3] frame], location) && padRevolve) {
             [self setupPauseMenu];
