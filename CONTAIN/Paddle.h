@@ -8,6 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Paddle : SKShapeNode
+@interface Paddle : SKSpriteNode
+
 + (id)newPaddleWithPath:(CGPathRef)path withRadius:(CGFloat)radius;
+
 @end

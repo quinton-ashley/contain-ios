@@ -136,8 +136,10 @@
   SKAction *mainu2move;
   SKAction *mainu3move;
   
+#if TARGET_OS_IPHONE
   NSNotification *didBecomeActiveNotification;
   NSNotification *willResignActiveNotification;
+#endif
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -158,7 +160,7 @@
   midX = screenWidth/2;
   midY = screenHeight/2;
   center = CGPointMake(midX, screenHeight-midX);
-  ballRadius = midX/160;
+  ballRadius = 100;
   padRadius0 = padRadius = midX/9.1;
   transitionTime = 0.2;
   energy0 = 400;
@@ -556,6 +558,7 @@
   [energyBar removeFromParent];
   [playTimer invalidate];
   playTimer = nil;
+#if TARGET_OS_IPHONE
   if (!userTutorial) {
     if (numContain == 1) {
       [self reportScore:@"contain.score.leaderboard"];
@@ -565,9 +568,10 @@
       [self reportScore:@"contain.score.leaderboard3"];
     }
   }
+#endif
   userPlaying = userInGame = false;
 }
-
+#if TARGET_OS_IPHONE
 - (void)reportScore:(NSString *)leaderboardID {
   if ([GKLocalPlayer localPlayer].isAuthenticated) {
     GKScore *score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardID player:[GKLocalPlayer localPlayer]];
@@ -579,6 +583,7 @@
     }];
   }
 }
+#endif
 
 - (void)startGame {
   if (playTimer != nil) {
@@ -628,7 +633,7 @@
   CGPathAddArc(padPath, NULL, 0,0, padRadius-padRadius/8, GLKMathDegreesToRadians(555), GLKMathDegreesToRadians(0), YES);
   for (int i=0; i<numPaddles; i++) {
     paddleArray[i] = [Paddle newPaddleWithPath:padPath withRadius:padRadius];
-    [paddleArray[i] setFillColor:(__bridge CGColorRef)([SKColor colorWithWhite:0.4 alpha:1])];
+//    [paddleArray[i] setFillColor:[SKColor colorWithWhite:0.4 alpha:1].CGColor];
     [self addChild:paddleArray[i]];
   }
   //padRadiusChange = padRadius0;
@@ -681,24 +686,33 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
   for (UITouch *touch in touches) {
-    [self response:[touch locationInNode:self]];
-    
+    [self response0:[touch locationInNode:self]];
   }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (userInGame && userPlaying && !padRevolve) {
-    padRevolve = !padRevolve;
-    for (int i=0; i<numPaddles; i++) {
-      [paddleArray[i] setFillColor:(__bridge CGColorRef)([SKColor colorWithWhite:0.4 alpha:1])];
-    }
-    [gameArray[0] removeFromParent];
+  for (UITouch *touch in touches) {
+    [self response0:[touch locationInNode:self]];
   }
+}
+
+#else
+
+- (void)mouseDown:(NSEvent *)event {
+  CGPoint location = [self.view convertPoint:[event locationInWindow] fromView:nil];
+  NSLog(@"%f, %f", location.x, location.y);
+  [self response0:location];
+}
+
+- (void)mouseUp:(NSEvent *)event {
+  CGPoint location = [self.view convertPoint:[event locationInWindow] fromView:nil];
+  NSLog(@"%f, %f", location.x, location.y);
+  [self response1:location];
 }
 
 #endif
 
-- (void)response:(CGPoint)location {
+- (void)response0:(CGPoint)location {
   if (!userInGame) {
     if (userMainMenu) {
       if (CGRectContainsPoint([universalArray[1] frame], location)) {
@@ -749,7 +763,7 @@
         } else if (location.x < midX*7/4) {
           padRevolve = !padRevolve;
           for (int i=0; i<numPaddles; i++) {
-            [paddleArray[i] setFillColor:(__bridge CGColorRef)([SKColor whiteColor])];
+//            [paddleArray[i] setFillColor:[SKColor whiteColor].CGColor];
           }
           [self addChild:gameArray[0]];
         } else {
@@ -770,6 +784,16 @@
         [self startGame];
       }
     }
+  }
+}
+
+-(void)response1:(CGPoint)location {
+  if (userInGame && userPlaying && !padRevolve) {
+    padRevolve = !padRevolve;
+    for (int i=0; i<numPaddles; i++) {
+      //      [paddleArray[i] setFillColor:[SKColor colorWithWhite:0.4 alpha:1].CGColor];
+    }
+    [gameArray[0] removeFromParent];
   }
 }
 
@@ -810,16 +834,16 @@
 }
 
 - (void)addBall {
-  Ball *newBall = [Ball newBallWithRadiusOf:ballRadius atPoint:center withSpeed:(midX*(ballSpeedFactor/10000))];
-  newBall.name = @"ball_normal";
-  [self addChild:newBall];
+  Ball *ball = [Ball newBallWithRadius:ballRadius position:center speed:(midX*(ballSpeedFactor/10000))];
+  ball.name = @"ball_normal";
+  [self addChild:ball];
   numBalls++;
 }
 
 - (void)addTutorialBall {
-  Ball *newBall = [Ball newBallWithRadiusOf:ballRadius atPoint:center withVector:ballVector];
-  newBall.name = @"ball_normal";
-  [self addChild:newBall];
+  Ball *ball = [Ball newBallWithRadius:ballRadius position:center vector:ballVector];
+  ball.name = @"ball_normal";
+  [self addChild:ball];
   numBalls++;
 }
 

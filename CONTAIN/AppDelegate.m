@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#if TARGET_OS_IPHONE
+
 @interface AppDelegate ()
 
 @end
@@ -41,5 +43,55 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#else
+
+#import "GameScene.h"
+
+@implementation AppDelegate {
+  GameScene *scene0;
+}
+
+@synthesize window = _window;
+
+-(id)init {
+  if (self = [super init]) {
+    NSUInteger windowStyleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+    _window = [[NSWindow alloc] initWithContentRect:NSMakeRect(360.0, 640.0, 720.0, 1000.0) styleMask:windowStyleMask backing:NSBackingStoreBuffered defer:YES];
+    _window.aspectRatio = NSMakeSize(9.0, 16.0);
+    _window.collectionBehavior = NSWindowCollectionBehaviorFullScreenDisallowsTiling;
+    _window.backgroundColor = [NSColor whiteColor];
+    _window.title = @"Contain";
+//    [_window toggleFullScreen:nil];
+    
+    // Setup Preference Menu Action/Target on MainMenu
+    //        NSMenu *mm = [NSApp mainMenu];
+    //        NSMenuItem *myBareMetalAppItem = [mm itemAtIndex:0];
+    //        NSMenu *subMenu = [myBareMetalAppItem submenu];
+    //        NSMenuItem *prefMenu = [subMenu itemWithTag:100];
+    //        prefMenu.target = self;
+    //        prefMenu.action = @selector(showPreferencesMenu:);
+  }
+  return self;
+}
+
+-(void)applicationWillFinishLaunching:(NSNotification *)notification {
+  self.skView = [[SKView alloc] initWithFrame:_window.frame];
+  //NSLog(@"window frame x %f", _window.frame.size.width);
+  scene0 = [[GameScene alloc] initWithSize:_window.frame.size];
+  [_window makeKeyAndOrderFront:self];
+  [self.skView presentScene:scene0];
+  [_window setContentView:_skView];
+}
+
+-(void)applicationDidFinishLaunching:(NSNotification *)notification {
+  
+}
+
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+  return YES;
+}
+
+#endif
 
 @end

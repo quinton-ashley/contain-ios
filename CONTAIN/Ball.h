@@ -8,7 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Ball : SKShapeNode
-+ (id)newBallWithRadiusOf:(CGFloat)radius atPoint:(CGPoint)position withSpeed:(CGFloat)speed;
-+ (id)newBallWithRadiusOf:(CGFloat)radius atPoint:(CGPoint)position withVector:(CGVector)vector;
+@interface Ball : SKSpriteNode
+
++ (id)newBallWithRadius:(CGFloat)radius position:(CGPoint)position speed:(CGFloat)speed;
++ (id)newBallWithRadius:(CGFloat)radius position:(CGPoint)position vector:(CGVector)vector;
+
 @end

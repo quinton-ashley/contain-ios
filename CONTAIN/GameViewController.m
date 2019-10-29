@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   SKView *skView = (SKView *)self.view;
-  GameScene *scene = [[GameScene alloc] initWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
+  GameScene *scene = [[GameScene alloc] initWithSize:self.view.frame.size];
   [skView presentScene:scene];
 }
 
