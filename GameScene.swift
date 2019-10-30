@@ -12,14 +12,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	var paddleArray: Array<SKNode> = [];
 	var universalArray: Array<SKNode> = [];
-	var gameArray: Array<SKNode> = [];
 	var mainArray: Array<SKNode> = [];
 	var selectArray: Array<SKNode> = [];
+	var gameArray: Array<SKNode> = [];
+	var pauseArray: Array<SKNode> = [];
 	lazy var playTimer: Timer = {
-		return Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector(("timePassed")), userInfo: nil, repeats: true);
+		return Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timePassed), userInfo: nil, repeats: true);
 	}();
-//	var screenWidth: CGFloat = size.width;
-//	var screenHeight: CGFloat = size.height;
 	lazy var screenWidth: CGFloat = {
 		if (size.width < 600) {
 			return size.width;
@@ -150,6 +149,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	lazy var mainu3move: SKAction = {
 		return SKAction.move(to: CGPoint(x: midX, y: screenHeight-midX*2.9), duration: transitionTime);
 	}();
+  var title: SKSpriteNode = SKSpriteNode(imageNamed: "title");
+  var box0: SKSpriteNode = SKSpriteNode(imageNamed: "box1");
+  var box1: SKSpriteNode = SKSpriteNode(imageNamed: "box0");
+  var box2: SKSpriteNode = SKSpriteNode(imageNamed: "box2");
+  var box3: SKSpriteNode = SKSpriteNode(imageNamed: "box2");
+  var box4: SKSpriteNode = SKSpriteNode(imageNamed: "box1");
+  var menuLbl: SKSpriteNode = SKSpriteNode(imageNamed: "menu");
+  var playLbl: SKSpriteNode = SKSpriteNode(imageNamed: "play");
+  var resetLbl: SKSpriteNode = SKSpriteNode(imageNamed: "reset");
+  var title_filled: SKSpriteNode = SKSpriteNode(imageNamed: "title-filled");
+  var addBallLbl: SKSpriteNode = SKSpriteNode(imageNamed: "addBall");
+  var itemSlotLbl: SKSpriteNode = SKSpriteNode(imageNamed: "itemSlot");
+  var refillLbl: SKSpriteNode = SKSpriteNode(imageNamed: "refill");
+  var pauseLbl: SKSpriteNode = SKSpriteNode(imageNamed: "pause");
+  var scoreLbl: SKSpriteNode = SKSpriteNode(imageNamed: "score");
+  var energyLbl: SKSpriteNode = SKSpriteNode(imageNamed: "energy");
+  var creditsLbl: SKSpriteNode = SKSpriteNode(imageNamed: "credits");
+  var playGameLbl: SKSpriteNode = SKSpriteNode(imageNamed: "playGame");
+  var highScoreLbl: SKSpriteNode = SKSpriteNode(imageNamed: "highScore");
+  var howToPlayLbl: SKSpriteNode = SKSpriteNode(imageNamed: "howToPlay");
+  var selectDifficultyLbl: SKSpriteNode = SKSpriteNode(imageNamed: "selectDifficulty");
+  var normalLbl: SKSpriteNode = SKSpriteNode(imageNamed: "normal");
+  var hardLbl: SKSpriteNode = SKSpriteNode(imageNamed: "hard");
+  var brutalLbl: SKSpriteNode = SKSpriteNode(imageNamed: "brutal");
 //  lazy var didBecomeActiveNotification: NSNotification = {
 //    return NSNotification(name: UIApplication.didBecomeActiveNotification, object: self);
 //  }();
@@ -166,7 +189,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
   
   override public func didMove(to view: SKView) {
-    print("Hiii");
 		backgroundColor = SKColor(white: 0.05, alpha: 1);
 		physicsWorld.gravity = CGVector(dx: 0.0, dy:0.0);
 		physicsWorld.contactDelegate = self;
@@ -206,99 +228,78 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		border4.physicsBody?.categoryBitMask = boundCategory;
 		border4.physicsBody?.collisionBitMask = 0x1<<10;
 		border4.physicsBody?.contactTestBitMask = ballCategory;
-		let u0: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-title");
-		let u1: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-box1");
-		let u2: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-box");
-		let u3: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-box2");
-		let u4: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-box2");
-		let u5: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-box1");
-		let u6: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-returntomenu");
-		let u7: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-unpause");
-		let u8: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-reset");
-		let g0: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-titlefilled");
-		let g1: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-addball");
-		let g2: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-itemplaceholder");
-		let g3: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-refill");
-		let g4: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-pause");
-		let g5: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-score");
-		let g6: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-energy");
-		let m0: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-credits");
-		let m1: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-playlabel");
-		let m2: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-highscorelabel");
-		let m3: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-howtolabel");
-		let s0: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-selectdifficulty");
-		let s1: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-normallabel");
-		let s2: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-hardlabel");
-		let s3: SKSpriteNode = SKSpriteNode(imageNamed: "Contain-brutallabel");
-		u0.position = CGPoint(x: midX, y: screenHeight-midX);
-		u1.position = CGPoint(x: midX, y: screenHeight-midX*2.1);
-		u2.position = CGPoint(x: midX, y: screenHeight-midX*2.5);
-		u3.position = CGPoint(x: midX, y: screenHeight-midX*2.9);
-		u4.position = CGPoint(x: midX/6, y: screenHeight-midX*2.9);
-		u5.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.9);
-		u7.position = CGPoint(x: midX, y: screenHeight-midX*2.65);
-		g0.position = CGPoint(x: midX, y: screenHeight-midX*2.65);
-		g1.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
-		g2.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
-		g3.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
-		u6.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
-		g4.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.4);
-		u8.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.4);
-		g5.position = CGPoint(x: midX/6, y: screenHeight-midX*2.76);
-		g6.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.85);
-		m0.position = CGPoint(x: midX, y: screenHeight-midX*1.6);
-		m1.position = CGPoint(x: midX, y: screenHeight-midX*2.1);
-		m2.position = CGPoint(x: midX, y: screenHeight-midX*2.5);
-		m3.position = CGPoint(x: midX, y: screenHeight-midX*2.9);
-		s0.position = CGPoint(x: midX, y: screenHeight-midX*1.6);
-		s1.position = CGPoint(x: midX/3, y: screenHeight-midX*2.2);
-		s2.position = CGPoint(x: midX, y: screenHeight-midX*2.2);
-		s3.position = CGPoint(x: midX*5/3, y: screenHeight-midX*2.2);
-		u0.size = CGSize(width: midX*1.5, height: midX);
-		u1.size = CGSize(width: midX, height: midX/3);
-		u2.size = u1.size;
-		u3.size = u1.size;
-		u4.size = CGSize(width: midX/3, height: midX/2);
-		u5.size = u4.size;
-		u7.size = u4.size;
-		g0.size = CGSize(width: midX, height: midX/2);
-		g1.size = CGSize(width: midX/4, height: midX/3);
-		g3.size = g1.size;
-		g4.size = g1.size;
-		g5.size = g1.size;
-		g6.size = g1.size;
-		u6.size = g1.size;
-		u8.size = g1.size;
-		g2.size = CGSize(width: midX/4.5, height: midX/3.5);
-		g5.size = CGSize(width: midX/5, height: midX/9);
-		m0.size = CGSize(width: midX, height: midX/4);
-		m1.size = CGSize(width: midX*3/4, height: midX/3);
-		m2.size = CGSize(width: midX*4/5, height: midX/4);
-		m3.size = CGSize(width: midX*3/4, height: midX/4);
-		s0.size = CGSize(width: midX, height: midX/4);
-		s1.size = CGSize(width: midX/2.5, height: midX/4);
-		s2.size = CGSize(width: midX/3, height: midX/4.5);
-		s3.size = CGSize(width: midX/2.5, height: midX/5);
-		universalArray = [u0,u1,u2,u3,u4,u5,u6,u7,u8];
-		gameArray = [g0,g1,g2,g3,g4,g5,g6];
-		mainArray = [m0,m1,m2,m3];
-		selectArray = [s0,s1,s2,s3];
+		
+		title.position = CGPoint(x: midX, y: screenHeight-midX);
+		box0.position = CGPoint(x: midX, y: screenHeight-midX*2.1);
+		box1.position = CGPoint(x: midX, y: screenHeight-midX*2.5);
+		box2.position = CGPoint(x: midX, y: screenHeight-midX*2.9);
+		box3.position = CGPoint(x: midX/6, y: screenHeight-midX*2.9);
+		box4.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.9);
+		playLbl.position = CGPoint(x: midX, y: screenHeight-midX*2.65);
+		title_filled.position = CGPoint(x: midX, y: screenHeight-midX*2.65);
+		addBallLbl.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
+		itemSlotLbl.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
+		refillLbl.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
+		menuLbl.position = CGPoint(x: midX/6, y: screenHeight-midX*2.4);
+		pauseLbl.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.4);
+		resetLbl.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.4);
+		scoreLbl.position = CGPoint(x: midX/6, y: screenHeight-midX*2.76);
+		energyLbl.position = CGPoint(x: midX*1.84, y: screenHeight-midX*2.85);
+		creditsLbl.position = CGPoint(x: midX, y: screenHeight-midX*1.6);
+		playGameLbl.position = CGPoint(x: midX, y: screenHeight-midX*2.1);
+		highScoreLbl.position = CGPoint(x: midX, y: screenHeight-midX*2.5);
+		howToPlayLbl.position = CGPoint(x: midX, y: screenHeight-midX*2.9);
+		selectDifficultyLbl.position = CGPoint(x: midX, y: screenHeight-midX*1.6);
+		normalLbl.position = CGPoint(x: midX/3, y: screenHeight-midX*2.2);
+		hardLbl.position = CGPoint(x: midX, y: screenHeight-midX*2.2);
+		brutalLbl.position = CGPoint(x: midX*5/3, y: screenHeight-midX*2.2);
+		title.size = CGSize(width: midX*1.5, height: midX);
+		box0.size = CGSize(width: midX, height: midX/3);
+		box1.size = box0.size;
+		box2.size = box0.size;
+		box3.size = CGSize(width: midX/3, height: midX/2);
+		box4.size = box3.size;
+		playLbl.size = box3.size;
+		title_filled.size = CGSize(width: midX, height: midX/2);
+		addBallLbl.size = CGSize(width: midX/4, height: midX/3);
+		refillLbl.size = addBallLbl.size;
+		pauseLbl.size = addBallLbl.size;
+		scoreLbl.size = addBallLbl.size;
+		energyLbl.size = addBallLbl.size;
+		menuLbl.size = addBallLbl.size;
+		resetLbl.size = addBallLbl.size;
+		itemSlotLbl.size = CGSize(width: midX/4.5, height: midX/3.5);
+		scoreLbl.size = CGSize(width: midX/5, height: midX/9);
+		creditsLbl.size = CGSize(width: midX, height: midX/4);
+		playGameLbl.size = CGSize(width: midX*3/4, height: midX/3);
+		highScoreLbl.size = CGSize(width: midX*4/5, height: midX/4);
+		howToPlayLbl.size = CGSize(width: midX*3/4, height: midX/4);
+		selectDifficultyLbl.size = CGSize(width: midX, height: midX/4);
+		normalLbl.size = CGSize(width: midX/2.5, height: midX/4);
+		hardLbl.size = CGSize(width: midX/3, height: midX/4.5);
+		brutalLbl.size = CGSize(width: midX/2.5, height: midX/5);
+		universalArray = [box0, box1, box2, box3, box4];
+		mainArray = [creditsLbl, playGameLbl, highScoreLbl, howToPlayLbl];
+		selectArray = [selectDifficultyLbl, normalLbl, hardLbl, brutalLbl];
+		gameArray = [title_filled, addBallLbl, itemSlotLbl, refillLbl, pauseLbl, scoreLbl, energyLbl];
+		pauseArray = [menuLbl,playLbl,resetLbl];
 
 		userFromLoad = true;
 		addChild(border1);
 		addChild(border2);
 		addChild(border3);
 		addChild(border4);
-		addChild(universalArray[0]);
-		addChild(mainArray[0]);
-		Timer.scheduledTimer(timeInterval: 3, target: self, selector: Selector(("setupMainMenu")), userInfo: nil, repeats: false);
+		addChild(title);
+		addChild(creditsLbl);
+    Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(setupMainMenu), userInfo: nil, repeats: false);
 	}
 
-	func setupMainMenu() {
+  @objc func setupMainMenu() {
 		pauseGame = false;
 		if (userFromLoad) {
 			numContain = -1;
-			for i in 1..<4 {
+			addChild(title);
+			for i in 1..<3 {
 				addChild(universalArray[i]);
 			}
 			for i in 1..<mainArray.count {
@@ -307,28 +308,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			userFromLoad = false;
 		} else if (!userPlaying) {
 			backgroundColor = SKColor(white: 0.05, alpha: 1);
-			universalArray[0].run(mainu0resize);
-			universalArray[1].run(mainboxresize);
-			universalArray[2].run(mainboxresize);
-			universalArray[3].run(mainboxresize);
-			universalArray[1].run(rotate90);
-			universalArray[3].run(rotaten90);
-			universalArray[0].run(mainu0move);
-			universalArray[1].run(mainu1move);
-			universalArray[2].run(mainu2move);
-			universalArray[3].run(mainu3move);
-			universalArray[4].removeFromParent();
-			universalArray[5].removeFromParent();
-			universalArray[6].removeFromParent();
+			title.run(mainu0resize);
+			box0.run(mainboxresize);
+			box1.run(mainboxresize);
+			box2.run(mainboxresize);
+			box0.run(rotate90);
+			box2.run(rotaten90);
+			title.run(mainu0move);
+			box0.run(mainu1move);
+			box1.run(mainu2move);
+			box2.run(mainu3move);
+			box3.removeFromParent();
+			box4.removeFromParent();
+			menuLbl.removeFromParent();
 			if (!userTutorial) {
-				universalArray[8].removeFromParent();
+				resetLbl.removeFromParent();
 			}
-			gameArray[5].removeFromParent();
-			gameArray[6].removeFromParent();
+			scoreLbl.removeFromParent();
+			energyLbl.removeFromParent();
 			scoreLabel.removeFromParent();
 			energyLabel.removeFromParent();
 			if (!userGameOver) {
-				universalArray[7].removeFromParent()
+				playLbl.removeFromParent()
 			}
 			for i in 0..<mainArray.count {
 				addChild(mainArray[i]);
@@ -344,12 +345,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		for i in 0..<mainArray.count {
 			mainArray[i].removeFromParent();
 		}
-		universalArray[1].run(pauseboxresize);
-		universalArray[2].run(pauseboxresize);
-		universalArray[3].run(pauseboxresize);
-		universalArray[1].run(pauseu1move);
-		universalArray[2].run(pauseu2move);
-		universalArray[3].run(pauseu3move);
+		box0.run(pauseboxresize);
+		box1.run(pauseboxresize);
+		box2.run(pauseboxresize);
+		box0.run(pauseu1move);
+		box1.run(pauseu2move);
+		box2.run(pauseu3move);
 		for i in 0..<selectArray.count {
 			addChild(selectArray[i]);
 		}
@@ -368,92 +369,92 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	func setupGameButtons() {
-		universalArray[0].run(gameu0resize);
-		universalArray[0].run(gameu2move);
+		title.run(gameu0resize);
+		title.run(gameu2move);
 		if (item == -1) {
-			addChild(gameArray[2]);
+			addChild(itemSlotLbl);
 		} else if (item == 0) {
-			addChild(gameArray[1]);
+			addChild(addBallLbl);
 		} else if (item == 1) {
-			addChild(gameArray[3]);
+			addChild(refillLbl);
 		}
-		addChild(gameArray[4]);
+		addChild(pauseLbl);
 		if (userSelectMenu) {
-			universalArray[2].run(gameu2resize);
-			universalArray[1].run(rotaten90);
-			universalArray[3].run(rotate90);
-			universalArray[1].run(gameu1move);
-			universalArray[2].run(gameu2move);
-			universalArray[3].run(gameu3move);
-			addChild(universalArray[4]);
-			addChild(universalArray[5]);
-			addChild(gameArray[5]);
-			addChild(gameArray[6]);
+			box1.run(gameu2resize);
+			box0.run(rotaten90);
+			box2.run(rotate90);
+			box0.run(gameu1move);
+			box1.run(gameu2move);
+			box2.run(gameu3move);
+			addChild(box3);
+			addChild(box4);
+			addChild(scoreLbl);
+			addChild(energyLbl);
 			for i in 0..<selectArray.count {
 				selectArray[i].removeFromParent();
 			}
 			userSelectMenu = false;
 		} else if (userMainMenu) {
-			universalArray[1].run(pauseboxresize);
-			universalArray[2].run(gameu2resize);
-			universalArray[3].run(pauseboxresize);
-			universalArray[1].run(rotaten90);
-			universalArray[3].run(rotate90);
-			universalArray[1].run(gameu1move);
-			universalArray[2].run(gameu2move);
-			universalArray[3].run(gameu3move);
-			addChild(universalArray[4]);
-			addChild(universalArray[5]);
-			addChild(gameArray[5]);
-			addChild(gameArray[6]);
+			box0.run(pauseboxresize);
+			box1.run(gameu2resize);
+			box2.run(pauseboxresize);
+			box0.run(rotaten90);
+			box2.run(rotate90);
+			box0.run(gameu1move);
+			box1.run(gameu2move);
+			box2.run(gameu3move);
+			addChild(box3);
+			addChild(box4);
+			addChild(scoreLbl);
+			addChild(energyLbl);
 			for i in 0..<mainArray.count {
 				mainArray[i].removeFromParent();
 			}
 			userMainMenu = false;
 		} else if (!userPlaying) {
-			universalArray[6].removeFromParent()
-			universalArray[8].removeFromParent()
+			menuLbl.removeFromParent()
+			resetLbl.removeFromParent()
 		} else if (userGameOver) {
-			playTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector(("timePassed")), userInfo: nil, repeats: true);
+      playTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timePassed), userInfo: nil, repeats: true);
 			backgroundColor = SKColor(white: 0.05, alpha: 1);
 			userPlaying = true;
 			pauseGame = false;
-			universalArray[7].removeFromParent();
+			playLbl.removeFromParent();
 		}
 	}
 
 	func setupPauseMenu() {
-		if userInGame && userPlaying && !userTutorial {
+		if (userInGame && userPlaying && !userTutorial) {
 			backgroundColor = SKColor(white: 0.4, alpha: 1);
 			userPlaying = false;
 			pauseGame = true;
-			universalArray[0].position = CGPoint(x: midX, y: screenHeight-midX*4);
-			addChild(universalArray[6]);
-			addChild(universalArray[7]);
-			addChild(universalArray[8]);
-			if item == -1 {
-				gameArray[2].removeFromParent();
-			} else if item == 0 {
-				gameArray[1].removeFromParent();
-			} else if item == 1 {
-				gameArray[3].removeFromParent();
+			title.position = CGPoint(x: midX, y: screenHeight-midX*4);
+			for i in 0..<pauseArray.count {
+				addChild(pauseArray[i]);
 			}
-			gameArray[4].removeFromParent();
+			if (item == -1) {
+				itemSlotLbl.removeFromParent();
+			} else if (item == 0) {
+				addBallLbl.removeFromParent();
+			} else if (item == 1) {
+				refillLbl.removeFromParent();
+			}
+			pauseLbl.removeFromParent();
 			playTimer.invalidate();
 		}
 	}
 
 	func applicationDidBecomeActive() {
-		if userInGame && !userPlaying && !userTutorial {
+		if (userInGame && !userPlaying && !userTutorial) {
 			pauseGame = true;
 		}
 	}
 
 	func applicationWillResignActive() {
-		if userTutorial {
+		if (userTutorial) {
 			gameOver();
-			gameArray[2].removeFromParent();
-			gameArray[4].removeFromParent();
+			itemSlotLbl.removeFromParent();
+			pauseLbl.removeFromParent();
 			setupMainMenu();
 		} else {
 			setupPauseMenu();
@@ -462,20 +463,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	func gameOver() {
-		if !padRevolve {
-			gameArray[0].removeFromParent();
+		if (!padRevolve) {
+			title_filled.removeFromParent();
 		}
-		if userGameOver {
-			universalArray[0].run(overu0resize);
-			universalArray[0].run(pauseu0move);
-			addChild(universalArray[6]);
-			if !userTutorial {
-				addChild(universalArray[8]);
+		if (userGameOver) {
+			title.run(overu0resize);
+			title.run(pauseu0move);
+			addChild(menuLbl);
+			if (!userTutorial) {
+				addChild(resetLbl);
 			}
-			gameArray[1].removeFromParent();
-			gameArray[2].removeFromParent();
-			gameArray[3].removeFromParent();
-			gameArray[4].removeFromParent();
+			addBallLbl.removeFromParent();
+			itemSlotLbl.removeFromParent();
+			refillLbl.removeFromParent();
+			pauseLbl.removeFromParent();
 		} else {
 			pauseGame = false
 
@@ -502,7 +503,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 	func startGame() {
 		playTimer.invalidate();
-		playTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector(("timePassed")), userInfo: nil, repeats: true);
+    playTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timePassed), userInfo: nil, repeats: true);
 		backgroundColor = SKColor(white: 0.05, alpha: 1);
 		numBalls = 0;
 		angle = 0;
@@ -529,7 +530,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		energyLabel.fontSize = 20;
 		energyLabel.fontName = "AvenirNext-Regular";
 		addChild(energyLabel);
-		if userTutorial {
+		if (userTutorial) {
 			ballTime = -1;
 		} else {
 			ballTime = 2;
@@ -553,7 +554,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		padRevolve = true;
 	}
 
-	func timePassed() {
+  @objc func timePassed() {
 		if (userPlaying) {
 			playTime += 1;
 			scoreLabel.removeFromParent();
@@ -593,116 +594,106 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 
-	func touchesBegan(_ touches: Set<UITouch>, withEvent event: UIEvent) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in touches {
-			response0(touch.location(in: self));
+			touchDown(touch.location(in: self));
 		}
 	}
 
-	func touchesEnded(_ touches: Set<UITouch>, withEvent event: UIEvent) {
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in touches {
-			response1(touch.location(in: self));
+			touchUp(touch.location(in: self));
 		}
 	}
 
 //  override func mouseDown(with event: NSEvent) {
-//    self.touchDown(atPoint: event.location(in: self));
+//    touchDown(atPoint: event.location(in: self));
 //  }
 //
 //  override func mouseDragged(with event: NSEvent) {
-//    self.touchMoved(toPoint: event.location(in: self));
+//    touchMoved(toPoint: event.location(in: self));
 //  }
 //
 //  override func mouseUp(with event: NSEvent) {
-//    self.touchUp(atPoint: event.location(in: self));
+//    touchUp(atPoint: event.location(in: self));
 //  }
 
-	func response0(_ location: CGPoint) {
-		if !userInGame {
-			if userMainMenu {
-				if universalArray[1].frame.contains(location) {
+  func touchDown(_ pos : CGPoint) {
+		if (!userInGame) {
+			if (userMainMenu) {
+				if (box0.frame.contains(pos)) {
 					userMainMenu = false
 					setupSelectMenu()
-				} else if universalArray[2].frame.contains(location) {
+				} else if (box1.frame.contains(pos)) {
 					viewHighScores()
-				} else if universalArray[3].frame.contains(location) {
+				} else if (box2.frame.contains(pos)) {
 					setupHowToPlay()
 				}
-			} else if userSelectMenu {
-				if universalArray[1].frame.contains(location) {
+			} else if (userSelectMenu) {
+				if (box0.frame.contains(pos)) {
 					numContain = 1
-				} else if universalArray[2].frame.contains(location) {
+				} else if (box1.frame.contains(pos)) {
 					numContain = 2
-				} else if universalArray[3].frame.contains(location) {
+				} else if (box2.frame.contains(pos)) {
 					numContain = 3
 				}
-				if numContain != 0 {
+				if (numContain != 0) {
 					setupGameButtons()
 					startGame()
 				}
-			} else if userGameOver {
-				if universalArray[1].frame.contains(location) {
+			} else if (userGameOver) {
+				if (box0.frame.contains(pos)) {
 					setupMainMenu()
-				} else if universalArray[3].frame.contains(location) && !userTutorial {
+				} else if (box2.frame.contains(pos) && !userTutorial) {
 					setupGameButtons()
 					startGame()
 				}
 			}
-		} else {
-			if userPlaying {
-				if location.y < midY {
-					if location.x < midX/4 {
-						if universalArray[1].frame.contains(location) {
-							if item == 0 {
-								addBall()
-								item = -1
-								gameArray[1].removeFromParent()
-								addChild(gameArray[2])
-							} else if item == 1 {
-								energy = energy0
-								item = -1
-								gameArray[3].removeFromParent()
-								addChild(gameArray[2])
-							}
-						}
-					} else if location.x < midX*7/4 {
-						padRevolve = !padRevolve;
-					} else {
-						if universalArray[3].frame.contains(location) && padRevolve {
-							setupPauseMenu();
-						}
-
-					}
-				}
-			} else {
-				if (universalArray[1].frame.contains(location)) {
-					gameOver();
-					setupMainMenu();
-				} else if (universalArray[2].frame.contains(location)) {
-					setupGameButtons();
-				} else if (universalArray[3].frame.contains(location)) {
-					gameOver();
-					setupGameButtons();
-					startGame();
-				}
-
-			}
-
+		} else if (userPlaying) {
+      if (box0.frame.contains(pos)) {
+        if (item == 0) {
+          addBall()
+          item = -1
+          addBallLbl.removeFromParent()
+          addChild(itemSlotLbl)
+        } else if (item == 1) {
+          energy = energy0
+          item = -1
+          refillLbl.removeFromParent()
+          addChild(itemSlotLbl)
+        }
+      } else if (box1.frame.contains(pos)) {
+        print("pad");
+        padRevolve = !padRevolve;
+      } else if (box2.frame.contains(pos) && padRevolve) {
+				setupPauseMenu();
+      }
+    } else if userGameOver {
+      if (box0.frame.contains(pos)) {
+        gameOver();
+        setupMainMenu();
+      } else if (box1.frame.contains(pos)) {
+        setupGameButtons();
+      } else if (box2.frame.contains(pos)) {
+        gameOver();
+        setupGameButtons();
+        startGame();
+      }
 		}
 	}
 
-	func response1(_ location: CGPoint) {
+	func touchUp(_ pos: CGPoint) {
 		if (userInGame && userPlaying && !padRevolve) {
 			padRevolve = !padRevolve;
-			gameArray[0].removeFromParent();
+			title_filled.removeFromParent();
 		}
 	}
 
-	func update() {
-		if userInGame && userPlaying {
-			if padRevolve {
+  override func update(_ currentTime: TimeInterval) {
+		if (userInGame && userPlaying) {
+			if (padRevolve) {
 				angle += 1.5
-				if angle >= 360 {
+				if (angle >= 360) {
 					angle = 0
 				}
 				for i in 0..<paddleArray.count {
@@ -711,7 +702,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				}
 			} else {
 				energy -= 1;
-
 			}
 			energyBar.removeFromParent();
 			energyBar.fillColor = SKColor.white;
@@ -743,7 +733,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		numBalls += 1;
 	}
 
-	func screenFlash() {
+  @objc func screenFlash() {
 		if (userPlaying && !userGameOver) {
 			backgroundColor = SKColor(white: 0.05, alpha: 1)
 		}
@@ -752,7 +742,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	public func didBegin(_ contact: SKPhysicsContact) {
 		var firstBody: SKPhysicsBody
 		var secondBody: SKPhysicsBody
-		if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+		if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
 			firstBody = contact.bodyA
 			secondBody = contact.bodyB
 		} else {
@@ -760,29 +750,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			secondBody = contact.bodyA
 
 		}
-		if (firstBody.categoryBitMask&ballCategory) != 0 {
-			if (secondBody.categoryBitMask&paddleCategory) != 0 && !padRevolve {
+		if ((firstBody.categoryBitMask&ballCategory) != 0) {
+			if ((secondBody.categoryBitMask&paddleCategory) != 0 && !padRevolve) {
 				let chance: UInt32 = arc4random_uniform(100)
 				if firstBody.node!.name!.isEqual("ball_blink") {
 					firstBody.node!.alpha = 0.4;
-					let vectorTotal: CGFloat = abs((firstBody.node!.position.x)-secondBody.node!.position.x)+abs(firstBody.node!.position.y-secondBody.node!.position.y)
+					let vectorTotal: CGFloat = abs((firstBody.node!.position.x) - secondBody.node!.position.x) + abs(firstBody.node!.position.y - secondBody.node!.position.y)
 					let multi: CGFloat = (midX*(ballSpeedFactor/10000))/vectorTotal;
-					firstBody.velocity = CGVector(dx: (firstBody.node!.position.x-secondBody.node!.position.x)*multi*3, dy: (firstBody.node!.position.y-secondBody.node!.position.y)*multi*3);
+					firstBody.velocity = CGVector(dx: (firstBody.node!.position.x - secondBody.node!.position.x) * multi*3, dy: (firstBody.node!.position.y - secondBody.node!.position.y) * multi*3);
 					firstBody.node?.name = "ball_speedshift"
 				} else {
-					if chance < 10 && (firstBody.node!.name!.isEqual("ball_normal")) {
+					if (chance < 10 && (firstBody.node!.name!.isEqual("ball_normal"))) {
 						firstBody.node!.name = "ball_blink";
 					} else {
-						if firstBody.node!.name!.isEqual("ball_speedshift") && item == -1 {
-							if chance > 50 {
+						if (firstBody.node!.name!.isEqual("ball_speedshift") && item == -1) {
+							if (chance > 50) {
 								item = 0;
-								addChild(gameArray[1]);
+								addChild(addBallLbl);
 							} else {
 								item = 1;
-								addChild(gameArray[3]);
+								addChild(refillLbl);
 
 							}
-							gameArray[2].removeFromParent();
+							itemSlotLbl.removeFromParent();
 						}
 						firstBody.node?.alpha = 1.0;
 						firstBody.node?.name = "ball_normal";
@@ -812,7 +802,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 					}
 				} else {
 					backgroundColor = SKColor(white: 0.2, alpha: 1);
-					perform(Selector(("screenFlash")), with: nil, afterDelay: 0.1);
+          perform(#selector(screenFlash), with: nil, afterDelay: 0.1);
 				}
 			}
 		}
