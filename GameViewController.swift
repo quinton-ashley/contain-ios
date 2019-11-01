@@ -22,9 +22,12 @@ class GameViewController: UIViewController {
 //        scene.scaleMode = .aspectFill;
     view.presentScene(scene);
     view.ignoresSiblingOrder = true;
+		
+		// debugging
     view.showsFPS = true;
     view.showsNodeCount = true;
-    
+		view.showsPhysics = true;
+		view.showsFields = true;
   }
   
   override var shouldAutorotate: Bool {
@@ -32,11 +35,12 @@ class GameViewController: UIViewController {
   }
   
   override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-    if UIDevice.current.userInterfaceIdiom == .phone {
-      return .allButUpsideDown;
-    } else {
-      return .all;
-    }
+		return .portrait;
+//    if UIDevice.current.userInterfaceIdiom == .phone {
+//      return .allButUpsideDown;
+//    } else {
+//      return .all;
+//    }
   }
   
   override func didReceiveMemoryWarning() {

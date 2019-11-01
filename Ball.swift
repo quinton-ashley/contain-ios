@@ -8,51 +8,49 @@
 //
 import SpriteKit
 
-class Ball: SKSpriteNode {
-	init(radius: CGFloat, position: CGPoint, speed: CGFloat) {
-		let texture = SKTexture(imageNamed: "ball");
-		super.init(texture: texture, color: SKColor.white, size: CGSize(width: radius, height: radius));
-		self.physicsBody = SKPhysicsBody(circleOfRadius: radius);
+class Ball: SKShapeNode {
+	init(radius: CGFloat, speed: CGFloat) {
+		super.init();
+		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius*2, height: radius*2)), transform: nil);
+		fillColor = SKColor.white;
+		strokeColor = SKColor.clear;
+		alpha = 1;
+		physicsBody = SKPhysicsBody(circleOfRadius: radius, center: CGPoint(x: position.x + radius, y: position.y + radius));
 		let velX = CGFloat(arc4random_uniform(UInt32(speed / 2)));
 		let velY = CGFloat(speed - CGFloat(velX));
 		let quadrantChance = arc4random_uniform(100)
-		if quadrantChance <= 25 {
-			self.physicsBody?.velocity = CGVector(dx: velX, dy: velY);
+		if (quadrantChance <= 25) {
+			physicsBody?.velocity = CGVector(dx: velX, dy: velY);
 		} else if (quadrantChance <= 50) {
-			self.physicsBody?.velocity = CGVector(dx: -velX, dy: CGFloat(velY));
+			physicsBody?.velocity = CGVector(dx: -velX, dy: CGFloat(velY));
 		} else if (quadrantChance <= 75) {
-			self.physicsBody?.velocity = CGVector(dx: -velX, dy: -velY);
+			physicsBody?.velocity = CGVector(dx: -velX, dy: -velY);
 		} else {
-			self.physicsBody?.velocity = CGVector(dx: velX, dy: -velY);
+			physicsBody?.velocity = CGVector(dx: velX, dy: -velY);
 		}
 
-		self.physicsBody?.friction = 0
-		self.physicsBody?.restitution = 1
-		self.physicsBody?.linearDamping = 0
-		self.position = position
-		self.physicsBody?.categoryBitMask = 0x1 << 0
-		self.physicsBody?.collisionBitMask = 0x1 << 10
-		self.physicsBody?.contactTestBitMask = 0x1 << 1 | 0x1 << 2
+		physicsBody?.friction = 0;
+		physicsBody?.restitution = 1;
+		physicsBody?.linearDamping = 0;
+		physicsBody?.categoryBitMask = 0x1 << 0;
+		physicsBody?.collisionBitMask = 0x1 << 10;
+		physicsBody?.contactTestBitMask = 0x1 << 1 | 0x1 << 2;
+		physicsBody?.usesPreciseCollisionDetection = true;
 	}
 	
-	init(radius: CGFloat, position: CGPoint, vector: CGVector) {
-		let texture = SKTexture(imageNamed: "ball");
-		super.init(texture: texture, color: SKColor.white, size: CGSize(width: radius, height: radius));
-		self.physicsBody = SKPhysicsBody(circleOfRadius: radius);
-		self.physicsBody?.velocity = vector;
-		self.physicsBody?.friction = 0;
-		self.physicsBody?.restitution = 1;
-		self.physicsBody?.linearDamping = 0;
-		self.position = position;
-		self.physicsBody?.categoryBitMask = 0x1 << 0;
-		self.physicsBody?.collisionBitMask = 0x1 << 10;
-		self.physicsBody?.contactTestBitMask = 0x1 << 1 | 0x1 << 2;
-	}
-	
-	init() {
-		let texture = SKTexture(imageNamed: "ball");
-		let radius = 20;
-		super.init(texture: texture, color: SKColor.white, size: CGSize(width: radius, height: radius));
+	init(radius: CGFloat, vector: CGVector) {
+		super.init();
+		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius, height: radius)), transform: nil);
+		fillColor = SKColor.white;
+		strokeColor = SKColor.clear;
+		physicsBody = SKPhysicsBody(circleOfRadius: radius);
+		physicsBody?.velocity = vector;
+		physicsBody?.friction = 0;
+		physicsBody?.restitution = 1;
+		physicsBody?.linearDamping = 0;
+		physicsBody?.categoryBitMask = 0x1 << 0;
+		physicsBody?.collisionBitMask = 0x1 << 10;
+		physicsBody?.contactTestBitMask = 0x1 << 1 | 0x1 << 2;
 	}
 	
   required public init?(coder aDecoder: NSCoder) {

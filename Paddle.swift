@@ -7,14 +7,18 @@
 //
 import SpriteKit
 
-class Paddle : SKSpriteNode {
-	init(path: CGPath?, radius: CGFloat) {
-		let texture = SKTexture(imageNamed: "ball");
-		super.init(texture: texture, color: SKColor.white, size: CGSize(width: radius, height: radius));
-		self.physicsBody = SKPhysicsBody(circleOfRadius: radius);
-		self.physicsBody?.categoryBitMask = 0x1 << 1;
-		self.physicsBody?.collisionBitMask = 0x1 << 10;
-		self.physicsBody?.contactTestBitMask = 0x1 << 0;
+class Paddle : SKShapeNode {
+	init(radius: CGFloat) {
+		super.init();
+		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius, height: radius)), transform: nil);
+		fillColor = SKColor.white;
+		strokeColor = SKColor.clear;
+		alpha = 1;
+		physicsBody = SKPhysicsBody(circleOfRadius: radius);
+		physicsBody?.categoryBitMask = 0x1 << 1;
+		physicsBody?.collisionBitMask = 0x1 << 10;
+		physicsBody?.contactTestBitMask = 0x1 << 0;
+		physicsBody?.usesPreciseCollisionDetection = true;
 	}
 	
   required public init?(coder aDecoder: NSCoder) {
