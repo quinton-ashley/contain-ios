@@ -7,12 +7,9 @@
 //
 import SpriteKit
 
-class Paddle : SKShapeNode {
+class Paddle : SKSpriteNode {
 	init(radius: CGFloat) {
-		super.init();
-		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius, height: radius)), transform: nil);
-		fillColor = SKColor.white;
-		strokeColor = SKColor.clear;
+		super.init(texture: SKTexture(imageNamed: "paddle"), color: SKColor.clear, size: CGSize(width: radius*2, height: radius*2));
 		alpha = 1;
 		physicsBody = SKPhysicsBody(circleOfRadius: radius);
 		physicsBody?.categoryBitMask = 0x1 << 1;

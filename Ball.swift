@@ -8,14 +8,11 @@
 //
 import SpriteKit
 
-class Ball: SKShapeNode {
+class Ball: SKSpriteNode {
 	init(radius: CGFloat, speed: CGFloat) {
-		super.init();
-		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius*2, height: radius*2)), transform: nil);
-		fillColor = SKColor.white;
-		strokeColor = SKColor.clear;
+		super.init(texture: SKTexture(imageNamed: "ball"), color: SKColor.clear, size: CGSize(width: radius*2, height: radius*2));
 		alpha = 1;
-		physicsBody = SKPhysicsBody(circleOfRadius: radius, center: CGPoint(x: position.x + radius, y: position.y + radius));
+		physicsBody = SKPhysicsBody(circleOfRadius: radius);
 		let velX = CGFloat(arc4random_uniform(UInt32(speed / 2)));
 		let velY = CGFloat(speed - CGFloat(velX));
 		let quadrantChance = arc4random_uniform(100)
@@ -39,10 +36,7 @@ class Ball: SKShapeNode {
 	}
 	
 	init(radius: CGFloat, vector: CGVector) {
-		super.init();
-		path = CGPath(ellipseIn: CGRect(origin: position, size: CGSize(width: radius, height: radius)), transform: nil);
-		fillColor = SKColor.white;
-		strokeColor = SKColor.clear;
+		super.init(texture: SKTexture(imageNamed: "ball"), color: SKColor.clear, size: CGSize(width: radius*2, height: radius*2));
 		physicsBody = SKPhysicsBody(circleOfRadius: radius);
 		physicsBody?.velocity = vector;
 		physicsBody?.friction = 0;

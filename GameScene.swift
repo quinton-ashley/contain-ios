@@ -10,7 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
-	var paddleArray: Array<SKShapeNode> = [];
+	var paddleArray: Array<SKSpriteNode> = [];
 	var boxArray: Array<SKSpriteNode> = [];
 	var mainArray: Array<SKSpriteNode> = [];
 	var selectArray: Array<SKSpriteNode> = [];
@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var paddleCategory: UInt32 = 0x1<<1;
 	var boundCategory: UInt32 = 0x1<<2;
 	lazy var ballRadius: CGFloat = {
-		return midX * 0.05;
+		return midX * 0.01;
 	}();
 	lazy var ballVector = {
 		return CGVector(dx: 0, dy: -midX*(ballSpeedFactor/10000));
@@ -252,6 +252,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		energyLbl.size = addBallLbl.size;
 		menuLbl.size = addBallLbl.size;
 		resetLbl.size = addBallLbl.size;
+		energyBar.fillColor = SKColor.white;
+		energyBar.strokeColor = SKColor.clear;
 		itemSlotLbl.size = CGSize(width: midX/4.5, height: midX/3.5);
 		scoreLbl.size = CGSize(width: midX/5, height: midX/9);
 		scoreStat.position = CGPoint(x: midX/6, y: screenHeight-midX*2.98);
@@ -375,8 +377,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			addChild(refillLbl);
 		}
 		addChild(pauseLbl);
-		
-		if (userSelectMenu) {
+		if (userGameOver) {
+			addChild(energyBar);
+		} else if (userSelectMenu) {
 			box1.run(gameu2resize);
 			box0.run(rotaten90);
 			box2.run(rotate90);
@@ -527,7 +530,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		for i in 0..<Int(numPaddles) {
 			print("adding paddle");
 			paddleArray.append(Paddle(radius: padRadius));
-			paddleArray[i].path = padPath;
 			addChild(paddleArray[i]);
 		}
 		userGameOver = false
@@ -540,9 +542,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if (userPlaying) {
 			playTime += 1;
       scoreStat.text = "\(Int(playTime))";
-			if (playTime == ballTime) {
+			if (playTime >= ballTime) {
 				addBall();
-				ballTime = playTime+40+(numContain*5);
+				ballTime = playTime+10;
 			}
 			if (userTutorial) {
 				if (playTime == 5) {
@@ -583,6 +585,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		if (!userInGame) {
 			if (userMainMenu) {
 				if (box0.frame.contains(pos)) {
+					// move to difficulty select menu
 					userMainMenu = false;
 					setupSelectMenu();
 				} else if (box1.frame.contains(pos)) {
@@ -592,10 +595,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				}
 			} else if (userSelectMenu) {
 				if (box0.frame.contains(pos)) {
+					// normal mode selected
 					numContain = 1;
 				} else if (box1.frame.contains(pos)) {
+					// hard mode selected
 					numContain = 2;
 				} else if (box2.frame.contains(pos)) {
+					// brutal mode selected
 					numContain = 3;
 				}
 				if (numContain != 0) {
@@ -604,26 +610,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				}
 			} else if (userGameOver) {
 				if (box0.frame.contains(pos)) {
+					// return to main menu
 					setupMainMenu();
 				} else if (box2.frame.contains(pos) && !userTutorial) {
+					// reset and start a new game
 					setupGameButtons();
 					startGame();
 				}
 			}
 		} else if (userPlaying) {
       if (box0.frame.contains(pos)) {
+				// use item
         if (item == 0) {
+					// add ball item used
 					addBall();
 					item = -1;
 					addBallLbl.removeFromParent();
 					addChild(itemSlotLbl);
         } else if (item == 1) {
+					// full energy item used
 					energy = fullEnergy;
 					item = -1;
           refillLbl.removeFromParent()
           addChild(itemSlotLbl)
         }
       } else if (box1.frame.contains(pos)) {
+				// stop paddles
         print("stop paddles");
 				addChild(title_filled);
         padRevolve = !padRevolve;
@@ -632,11 +644,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     } else if (!userPlaying) {
       if (box0.frame.contains(pos)) {
+				// return to main menu
         gameOver();
         setupMainMenu();
       } else if (box1.frame.contains(pos)) {
+				// return to game
         setupGameButtons();
       } else if (box2.frame.contains(pos)) {
+				// reset game and start a new game
         gameOver();
         setupGameButtons();
         startGame();
@@ -654,6 +669,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   override func update(_ currentTime: TimeInterval) {
 		if (userInGame && userPlaying) {
+			enumerateChildNodes(withName: "ball_blink", using: { (node: SKNode, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+				if (node.alpha == 1.0) {
+					node.alpha = 0.4;
+				} else {
+					node.alpha = 1.0;
+				}
+			});
+			energyBar.xScale = energy/400;
 			if (padRevolve) {
 				angle += 1.5;
 				if (angle >= 360) {
@@ -661,12 +684,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 				}
 				for i in 0..<paddleArray.count {
 					paddleArray[i].position = CGPoint(x: (sin(CGFloat(GLKMathDegreesToRadians(Float(angle+CGFloat(i)*45))))*midX)+midX, y: (cos(CGFloat(GLKMathDegreesToRadians(Float(angle+CGFloat(i)*45))))*midX)+(screenHeight-midX));
-					paddleArray[i].zRotation = CGFloat(-GLKMathDegreesToRadians(Float(angle+8+CGFloat(i)*45)));
+					paddleArray[i].zRotation = CGFloat(-GLKMathDegreesToRadians(Float(angle+180+CGFloat(i)*45)));
 				}
 			} else {
-				energy -= 1;
+				energy -= numContain;
         energyStat.text = "\(Int(energy/4))";
-        energyBar.xScale = energy/400;
+				if (energy > 100) {
+					energyBar.fillColor = SKColor.white;
+				} else {
+					energyBar.fillColor = SKColor.red;
+				}
 			}
 			if (energy < 0) {
 				userGameOver = true;
@@ -681,13 +708,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		ball.name = "ball_normal";
 		addChild(ball);
 		numBalls += 1;
-		enumerateChildNodes(withName: "ball_blink", using: { (node: SKNode, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-			if (node.alpha == 1.0) {
-				node.alpha = 0.4;
-			} else {
-				node.alpha = 1.0;
-			}
-		});
 	}
 
 	func addTutorialBall() {
